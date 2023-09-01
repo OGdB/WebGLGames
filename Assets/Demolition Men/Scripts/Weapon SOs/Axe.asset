@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fad5d449fbc40b3418b4c0ce1116c3eb, type: 3}
+  m_Name: Axe
+  m_EditorClassIdentifier: 
+  weapon: 2
+  pushForce: 3
+  woodDamage: 35
+  onWoodSound: {fileID: 8300000, guid: 256d8d99603572c49831efaee2f7e7f2, type: 3}
+  brickDamage: 4
+  onBrickSound: {fileID: 8300000, guid: 8038a00bb3ac1a14ca23f236ec9f0c30, type: 3}
+  metalDamage: 4
+  onMetalSound: {fileID: 8300000, guid: 8038a00bb3ac1a14ca23f236ec9f0c30, type: 3}

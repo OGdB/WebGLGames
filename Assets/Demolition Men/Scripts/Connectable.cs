@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Connectable : MonoBehaviour
 {
@@ -16,38 +16,41 @@ public class Connectable : MonoBehaviour
     public bool testBool = false;
     public bool connect = true;
 
-    private void Awake()
+    private void OnEnable()
     {
         if (!connect) return;
 
-        // Get all of the surrounding destructible blocks that connect.
+        FindConnections(true, true, true, false);
+    }
+
+    public List<RaycastHit2D> FindConnections(bool left, bool right, bool top, bool bottom)
+    {
         List<RaycastHit2D> hits = new();
 
-        gameObject.layer = LayerMask.NameToLayer("Default");
+        Collider2D col = GetComponent<Collider2D>();
+
         int mask = 1 << LayerMask.NameToLayer("Objects");
-        hits.Add(Physics2D.Raycast(transform.position, Vector3.right, 0.6f, mask));
-        hits.Add(Physics2D.Raycast(transform.position, Vector3.left, 0.6f, mask));
-        hits.Add(Physics2D.Raycast(transform.position, Vector3.up, 0.6f, mask));
-        //hits.Add(Physics2D.Raycast(transform.position, Vector3.down, 0.6f, mask));
+
+        gameObject.layer = LayerMask.NameToLayer("Default");
+
+        if (left)
+            hits.Add(Physics2D.Raycast(new Vector2(col.bounds.min.x, col.bounds.center.y), Vector3.left, 0.6f, mask));
+        if (right)
+            hits.Add(Physics2D.Raycast(new Vector2(col.bounds.max.x, col.bounds.center.y), Vector3.right, 0.6f, mask));
+        if (top)
+            hits.Add(Physics2D.Raycast(new Vector2(col.bounds.center.x, col.bounds.max.y), Vector3.up, 0.6f, mask));
+        if (bottom)
+            hits.Add(Physics2D.Raycast(new Vector2(col.bounds.center.x, col.bounds.max.y), Vector3.up, 0.6f, mask));
+
         gameObject.layer = LayerMask.NameToLayer("Objects");
 
-        if (testBool)
-        {
-            Debug.DrawRay(transform.position, -transform.right * 0.6f, Color.white, 3f);
-            Debug.DrawRay(transform.position, transform.right * 0.6f, Color.cyan, 3f);
-            Debug.DrawRay(transform.position, transform.up * 0.6f, Color.red, 3f);
-            Debug.DrawRay(transform.position, -transform.up * 0.6f, Color.yellow, 3f);
-        }
-
-        bool hasHit = false;
         foreach (RaycastHit2D hit in hits)
         {
             if (hit)
             {
-                hasHit = true;
                 hit.transform.TryGetComponent(out Connectable conn);
                 if (!conn) continue;
-                
+
                 // For each surrounding destructible block, add a fixed joint connecting to that block;
                 FixedJoint2D newJoint = gameObject.AddComponent<FixedJoint2D>();
 
@@ -62,7 +65,9 @@ public class Connectable : MonoBehaviour
                 conn.connectedJoints.Add(newJoint);
             }
         }
-        if (!hasHit) rb.bodyType = RigidbodyType2D.Dynamic;
+
+        return hits;
+
     }
 
     public void BreakConnection()
@@ -82,7 +87,6 @@ public class Connectable : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        temp = collision.relativeVelocity.magnitude;
         if (collision.relativeVelocity.magnitude > 8f)
         {
             audioSource.Play();
@@ -93,27 +97,5 @@ public class Connectable : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
-    }
-
-    private float lastPunchForce = 0;
-    public float temp = 0;
-    private void OnDrawGizmos()
-    {
-        if (!testBool) return;
-
-        float force = rb.velocity.magnitude;
-        if (force > 0.5f)
-            lastPunchForce = force;
-        DrawLabel(transform.position, lastPunchForce.ToString(), Color.yellow);
-
-        DrawLabel(transform.position + Vector3.up * 0.25f, temp.ToString(), Color.white);
-
-        void DrawLabel(Vector3 position, string text, Color color)
-        {
-            GUIStyle style = new GUIStyle();
-            style.fontSize = 24;
-            style.normal.textColor = color;
-            Handles.Label(position, text, style);
-        }
     }
 }

@@ -21,14 +21,9 @@ public class BlockDestruction : MonoBehaviour
     [SerializeField]
     private LayerMask punchableMasks;
 
-    [Header("Head Box Settings"), SerializeField]
-    [Tooltip("The amount of force to apply upwards when hitting a block with the head.")]
-    private float headHitForce = 3f;
-
     // PRIVATES
     private InputReader inputReader;
     private Animator anim;
-    private Rigidbody2D rb;
     private RaycastHit2D[] punchBoxCastHits;
     private int currentPunchClip = 0;
     private AudioSource audioSource;
@@ -40,7 +35,6 @@ public class BlockDestruction : MonoBehaviour
         inputReader = GetComponent<InputReader>();
         audioSource = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
 
         SetWeapon(Weapon.Fists);
     }
@@ -56,25 +50,7 @@ public class BlockDestruction : MonoBehaviour
     }
     #endregion
 
-    private void FixedUpdate()
-    {
-        PunchOverlapBoxCast();
-        //HeadPunchBoxCast();
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (Mathf.Abs(collision.relativeVelocity.y) > 3f)
-        {
-            Rigidbody2D brickRb = collision.rigidbody;
-            if (brickRb)
-            {
-                brickRb.AddForceAtPosition(transform.up * headHitForce, collision.contacts[0].point, ForceMode2D.Impulse);
-                brickRb.TryGetComponent(out DestructibleBlock block);
-                block?.Punched(collision.contacts[0].point, transform.up, weapons[0].weaponData);
-            }
-        }
-    }
+    private void FixedUpdate() => PunchOverlapBoxCast();
 
     public void SetWeapon(Weapon newWeapon)
     {

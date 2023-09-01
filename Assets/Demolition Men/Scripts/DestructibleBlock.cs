@@ -6,52 +6,61 @@ public class DestructibleBlock : MonoBehaviour
 {
     #region Properties
     [SerializeField]
-    private BlockMaterial thisMaterial = BlockMaterial.Brick;
+    protected BlockMaterial thisMaterial = BlockMaterial.Brick;
     [SerializeField]
-    private int blockHealth = 20;
+    protected int blockHealth = 20;
     [SerializeField]
-    private AudioClip onBreakSound;
+    protected AudioClip onBreakSound;
 
-    private Rigidbody2D rb;
+    protected Rigidbody2D rb;
 
     public bool debug = false;
     #endregion
 
-    private void Start() => rb = GetComponent<Rigidbody2D>();
+    protected virtual void Start() => rb = GetComponent<Rigidbody2D>();
 
-    public virtual void Punched(Vector3 position, Vector3 direction, WeaponSO weapon)
+    public virtual void Punched(Vector2 position, Vector3 direction, WeaponSO weapon)
+    {
+        DamageBlock(position, direction, weapon);
+
+        if (blockHealth <= 0)
+        {
+            BreakBlock();
+        }
+        if (blockHealth <= -20)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+    protected void DamageBlock(Vector2 position, Vector3 direction, WeaponSO weapon)
     {
         switch (thisMaterial)
         {
             case BlockMaterial.Brick:
                 blockHealth -= weapon.BrickDamage; // Damage
                 AudioEffectPlayer.PlaySoundEffect(weapon.OnBrickSound, transform.position);
-                ParticleEffectPlayer.PlayBrickParticles(transform.position);
+                ParticleEffectPlayer.PlayBrickParticles(position);
                 break;
 
             case BlockMaterial.Wood:
                 blockHealth -= weapon.WoodDamage; // Damage
                 AudioEffectPlayer.PlaySoundEffect(weapon.OnWoodSound, transform.position);
-                ParticleEffectPlayer.PlayWoodParticles(transform.position);
+                ParticleEffectPlayer.PlayWoodParticles(position);
                 break;
 
             case BlockMaterial.Metal:
                 blockHealth -= weapon.MetalDamage; // Damage
                 AudioEffectPlayer.PlaySoundEffect(weapon.OnMetalSound, transform.position);
-                ParticleEffectPlayer.PlayMetalParticles(transform.position);
+                ParticleEffectPlayer.PlayMetalParticles(position);
                 break;
 
         }
 
         rb.AddForceAtPosition(direction * weapon.PushForce, position);
-
-        if (blockHealth <= 0)
-            BreakBlock();
-        if (blockHealth <= -20)
-            gameObject.SetActive(false);
     }
 
-    private void BreakBlock()
+    protected void BreakBlock()
     {
         TryGetComponent(out Connectable conn);
         conn?.BreakConnection();
@@ -59,9 +68,9 @@ public class DestructibleBlock : MonoBehaviour
     }
 
     #region Gizmos
-    private void OnValidate() => rb = GetComponent<Rigidbody2D>();
+    protected virtual void OnValidate() => rb = GetComponent<Rigidbody2D>();
 
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         if (!debug) return;
 

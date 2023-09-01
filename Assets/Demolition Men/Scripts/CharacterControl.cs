@@ -190,5 +190,5 @@ public class CharacterControl : MonoBehaviour
                 Handles.Label(position, text, style);
             }
         }
-    }w
+    }
 }

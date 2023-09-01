@@ -95,14 +95,14 @@ public class CharacterControl : MonoBehaviour
         float xInput = inputReader.MoveInput;
         isGrounded = groundChecker.IsGrounded();
 
-        // Run Animation
-        anim.SetFloat("CurrentSpeed", Mathf.Abs(xInput));
-
         // Movement & Rotation
         Movement(xInput);
 
         // Fall/Gravity mechanic.
         BetterGravity();
+
+        // Run Animation
+        anim.SetFloat("CurrentSpeed", Mathf.Abs(xInput));
         // Jump/Fall animation
         anim.SetBool("InAir", !isGrounded);
 
@@ -131,6 +131,11 @@ public class CharacterControl : MonoBehaviour
         }
     }
 
+    // TODO - Double Jump (?)
+    /// <summary>
+    /// Simple jump with cooldown.
+    /// If on the ground and there is no cooldown, player can jump.
+    /// </summary>
     private void Jump()
     {
         if (isGrounded && !jumpCooldown)
@@ -149,6 +154,9 @@ public class CharacterControl : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Movement Sound ~ Triggered by animation event.
+    /// </summary>
     public void AudioStep()
     {
         audioSource.PlayOneShot(stepSounds[currentStepSound], stepVolume);
@@ -157,23 +165,30 @@ public class CharacterControl : MonoBehaviour
         currentStepSound %= stepSounds.Length;
     }
 
+
+    private void OnValidate()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        // Grounded Check copy for debug reasons.
+        LayerMask groundLayers = 1 << LayerMask.NameToLayer("Ground") | 1 << LayerMask.NameToLayer("Objects");
+        Collider2D collider = GetComponent<Collider2D>();
+        Vector2 groundCheckBoxSize = new(0.2f, 0.15f);
+        groundChecker = new(groundLayers, groundCheckBoxSize, collider);
+    }
     private void OnDrawGizmos()
     {
         if (debug)
         {
-            if (Application.isPlaying)
-            {
-                DrawLabel(transform.position, rb.velocity.y.ToString());
-                groundChecker.GroundedGizmos();
-            }
+            DrawLabel(transform.position, rb.velocity.y.ToString());
+            groundChecker.GroundedGizmos();
 
             void DrawLabel(Vector3 position, string text)
             {
-                GUIStyle style = new GUIStyle();
+                GUIStyle style = new();
                 style.fontSize = 24;
                 style.normal.textColor = Color.white;
                 Handles.Label(position, text, style);
             }
         }
-    }
+    }w
 }

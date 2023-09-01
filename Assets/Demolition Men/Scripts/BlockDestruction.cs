@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class Melee : MonoBehaviour
+/// <summary>
+/// Responsible for any of the player's interaction with the destructible environment
+/// </summary>
+public class BlockDestruction : MonoBehaviour
 {
     #region Properties
     [SerializeField]
@@ -19,10 +22,7 @@ public class Melee : MonoBehaviour
     private LayerMask punchableMasks;
 
     [Header("Head Box Settings"), SerializeField]
-    private Vector2 headPosOffset = Vector3.up;
-    [SerializeField]
-    private Vector2 headBoxSize = Vector3.one;
-    [SerializeField, Tooltip("The amount of force to apply upwards when hitting a block with the head.")]
+    [Tooltip("The amount of force to apply upwards when hitting a block with the head.")]
     private float headHitForce = 3f;
 
     // PRIVATES
@@ -59,7 +59,21 @@ public class Melee : MonoBehaviour
     private void FixedUpdate()
     {
         PunchOverlapBoxCast();
-        HeadPunchBoxCast();
+        //HeadPunchBoxCast();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (Mathf.Abs(collision.relativeVelocity.y) > 3f)
+        {
+            Rigidbody2D brickRb = collision.rigidbody;
+            if (brickRb)
+            {
+                brickRb.AddForceAtPosition(transform.up * headHitForce, collision.contacts[0].point, ForceMode2D.Impulse);
+                brickRb.TryGetComponent(out DestructibleBlock block);
+                block?.Punched(collision.contacts[0].point, transform.up, weapons[0].weaponData);
+            }
+        }
     }
 
     public void SetWeapon(Weapon newWeapon)
@@ -116,39 +130,9 @@ public class Melee : MonoBehaviour
         punchBoxPos.y += boxCenterOffset.y;
         punchBoxCastHits = Physics2D.BoxCastAll(punchBoxPos, punchBoxSize, 0, transform.right, 0, punchableMasks);
     }
-    private void HeadPunchBoxCast()
-    {
-        Vector2 headBoxPos = transform.position;
-        headBoxPos += headPosOffset;
-        RaycastHit2D[] headBoxCastHits = Physics2D.BoxCastAll(headBoxPos, headBoxSize, 0, transform.up, 0, punchableMasks);
-        if (rb.velocity.y > 0.7f)
-        {
-            foreach (var hit in headBoxCastHits)
-            {
-                if (hit)
-                {
-                    Rigidbody2D hitBody = hit.rigidbody;
-                    if (hit.rigidbody)
-                    {
-                        hitBody.AddForceAtPosition(transform.up * headHitForce, hit.point, ForceMode2D.Impulse);
-                        hitBody.TryGetComponent(out DestructibleBlock block);
-                        block?.Punched(hit.point, transform.up, weapons[0].weaponData);
-                    }
-
-                }
-            }
-        }
-    }
 
     private void OnDrawGizmos()
     {
-        // Head box
-        Vector2 headBoxPos = transform.position;
-        headBoxPos += headPosOffset;
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(headBoxPos, headBoxSize);
-
         // Punch box
         Vector2 punchBoxPos = (Vector2)transform.position + ((Vector2)transform.right * boxCenterOffset);
         punchBoxPos.y += boxCenterOffset.y;

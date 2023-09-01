@@ -80,6 +80,15 @@ public class Connectable : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        temp = collision.relativeVelocity.magnitude;
+        if (collision.relativeVelocity.magnitude > 8f)
+        {
+            audioSource.Play();
+        }
+    }
+
     private void OnValidate()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -105,15 +114,6 @@ public class Connectable : MonoBehaviour
             style.fontSize = 24;
             style.normal.textColor = color;
             Handles.Label(position, text, style);
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        temp = collision.relativeVelocity.magnitude;
-        if (collision.relativeVelocity.magnitude > 8f)
-        {
-            audioSource.Play();
         }
     }
 }

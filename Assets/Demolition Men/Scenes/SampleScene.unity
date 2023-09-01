@@ -7381,7 +7381,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.06, y: 0.92, z: -10}
+  m_LocalPosition: {x: -15.06, y: 0.07000005, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13934,7 +13934,7 @@ MonoBehaviour:
       m_Action: Mace Buttons
       m_Flags: 0
     m_Flags: 0
-  meleeScript: {fileID: 1685559588}
+  meleeScript: {fileID: 0}
   fistButton: {fileID: 1821597768}
   axeButton: {fileID: 2014117612}
   maceButton: {fileID: 1669966590}
@@ -34401,7 +34401,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1685559588}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Melee, Assembly-CSharp
         m_MethodName: SetWeapon
         m_Mode: 3
@@ -34530,7 +34530,7 @@ GameObject:
   - component: {fileID: 1685559576}
   - component: {fileID: 1685559575}
   - component: {fileID: 1685559587}
-  - component: {fileID: 1685559588}
+  - component: {fileID: 1685559589}
   m_Layer: 6
   m_Name: DemoMan
   m_TagString: Untagged
@@ -34620,7 +34620,7 @@ Transform:
   m_GameObject: {fileID: 1685559574}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.06, y: -0.19, z: 0}
+  m_LocalPosition: {x: -15.06, y: -1.04, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -34838,7 +34838,7 @@ MonoBehaviour:
   maxHealth: 100
   healthSlider: {fileID: 249647118}
   testBool: 0
---- !u!114 &1685559588
+--- !u!114 &1685559589
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -34847,7 +34847,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1685559574}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7aa92ff68e2d38c4a82bfc2dd7c02b7f, type: 3}
+  m_Script: {fileID: 11500000, guid: f74a934d5a0f65144a69f951fb1b10df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentWeapon: 1
@@ -34868,8 +34868,8 @@ MonoBehaviour:
   punchableMasks:
     serializedVersion: 2
     m_Bits: 128
-  headPosOffset: {x: 0.06, y: 0.79}
-  headBoxSize: {x: 0.55, y: 0.34}
+  headPosOffset: {x: 0, y: 1}
+  headBoxSize: {x: 1, y: 1}
   headHitForce: 3
 --- !u!1001 &1693905808
 PrefabInstance:
@@ -35540,7 +35540,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1685559588}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Melee, Assembly-CSharp
         m_MethodName: SetWeapon
         m_Mode: 3
@@ -36627,7 +36627,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1685559588}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Melee, Assembly-CSharp
         m_MethodName: SetWeapon
         m_Mode: 3

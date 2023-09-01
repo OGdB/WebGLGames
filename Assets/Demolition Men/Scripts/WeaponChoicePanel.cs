@@ -10,7 +10,7 @@ public class WeaponChoicePanel : MonoBehaviour
     public InputAction maceButtons;
 
     [SerializeField]
-    private Melee meleeScript;
+    private BlockDestruction meleeScript;
 
     [SerializeField]
     private Button fistButton;

@@ -34,13 +34,13 @@ public class Connectable : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Default");
 
         if (left)
-            hits.Add(Physics2D.Raycast(new Vector2(col.bounds.min.x, col.bounds.center.y), Vector3.left, 0.6f, mask));
+            hits.Add(Physics2D.Raycast(new Vector2(col.bounds.min.x, col.bounds.center.y), -transform.right, 0.6f, mask));
         if (right)
-            hits.Add(Physics2D.Raycast(new Vector2(col.bounds.max.x, col.bounds.center.y), Vector3.right, 0.6f, mask));
+            hits.Add(Physics2D.Raycast(new Vector2(col.bounds.max.x, col.bounds.center.y), transform.right, 0.6f, mask));
         if (top)
-            hits.Add(Physics2D.Raycast(new Vector2(col.bounds.center.x, col.bounds.max.y), Vector3.up, 0.6f, mask));
+            hits.Add(Physics2D.Raycast(new Vector2(col.bounds.center.x, col.bounds.max.y), transform.up, 0.6f, mask));
         if (bottom)
-            hits.Add(Physics2D.Raycast(new Vector2(col.bounds.center.x, col.bounds.max.y), Vector3.up, 0.6f, mask));
+            hits.Add(Physics2D.Raycast(new Vector2(col.bounds.center.x, col.bounds.min.y), -transform.up, 0.6f, mask));
 
         gameObject.layer = LayerMask.NameToLayer("Objects");
 

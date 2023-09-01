@@ -15,7 +15,7 @@ public class DestructionManager : MonoBehaviour
         Singleton = this;
     }
 
-    public static void SplitSprite(GameObject originalGo, float splitY, BlockMaterial material, ref GameObject upperSegment, ref GameObject lowerSegment)
+    public static void SplitSprite(GameObject originalGo, float splitHeightPosition, BlockMaterial material, ref GameObject lowerSegment, ref GameObject upperSegment)
     {
         GameObject blockPrefab = null;
         foreach (var block in Singleton.Blocks)
@@ -27,7 +27,7 @@ public class DestructionManager : MonoBehaviour
         }
         if (!blockPrefab)
         {
-            Debug.LogError("No prefab associated to the material was found.");
+            Debug.LogError("No prefab associated with the material was found.");
             return;
         }
 
@@ -37,32 +37,40 @@ public class DestructionManager : MonoBehaviour
             return;
         }
 
-        // Calculate the size of the upper and lower parts
-        Vector3 upperSize = new(originalRenderer.size.x, splitY - originalRenderer.bounds.min.y, 1f);
-        Vector3 lowerSize = new(originalRenderer.size.x, originalRenderer.bounds.max.y - splitY, 1f);
+        // Calculate the size and position of the upper and lower parts
+        Vector3 originalSize = originalRenderer.bounds.size;
+        float upperHeight = originalSize.y - (splitHeightPosition - originalRenderer.bounds.min.y);
+        float lowerHeight = splitHeightPosition - originalRenderer.bounds.min.y;
 
-                // Set the size and position of the upper and lower parts
-        Vector3 upperPos = new(originalRenderer.bounds.center.x, splitY - upperSize.y / 2, 0f);
-        Vector3 lowerPos = new(originalRenderer.bounds.center.x, splitY + lowerSize.y / 2, 0f);
+        Vector3 upperSize = new Vector3(originalSize.x, upperHeight, 1f);
+        Vector3 lowerSize = new Vector3(originalSize.x, lowerHeight, 1f);
+
+        Vector3 upperPos = originalRenderer.bounds.center + Vector3.up * (upperHeight * 0.5f);
+        Vector3 lowerPos = originalRenderer.bounds.center - Vector3.up * (lowerHeight * 0.5f);
 
         Quaternion rotation = originalGo.transform.rotation;
 
         // Create two new GameObjects for the split parts
-        upperSegment = Instantiate(blockPrefab, upperPos, rotation);
-        Connectable upperConnectable = upperSegment.GetComponent<Connectable>();
-        upperConnectable.connect = false;
-        upperConnectable.FindConnections(true, true, true, false);
-
+        // Lower
         lowerSegment = Instantiate(blockPrefab, lowerPos, rotation);
+        lowerSegment.GetComponent<SpriteRenderer>().size = lowerSize;
         Connectable lowerConnectable = lowerSegment.GetComponent<Connectable>();
         lowerConnectable.connect = false;
-        upperConnectable.FindConnections(true, true, false, true);
+        lowerConnectable.FindConnections(true, true, false, true);
+        lowerSegment.name = "Lower Segment";
 
+        // Upper
+        upperSegment = Instantiate(blockPrefab, upperPos, rotation);
         upperSegment.GetComponent<SpriteRenderer>().size = upperSize;
-        lowerSegment.GetComponent<SpriteRenderer>().size = upperSize;
+        Connectable higherConnectable = upperSegment.GetComponent<Connectable>();
+        higherConnectable.connect = false;
+        higherConnectable.FindConnections(true, true, true, false);
+        upperSegment.name = "Upper Segment";
+
 
         originalGo.SetActive(false);
     }
+
 }
 
 [System.Serializable]

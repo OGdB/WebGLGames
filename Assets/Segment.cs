@@ -1,68 +1,62 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class Segment : DestructibleBlock
+public class Segment : DestructableBlock
 {
-    Collider2D col;
-    Vector3 punchPos;
-
     [SerializeField]
-    float segmentationSize = 0.65f;
+    private float breakHealth = 50;
 
     protected override void Start()
     {
         base.Start();
-        col = GetComponent<Collider2D>();
     }
-    public override void Punched(Vector2 position, Vector3 direction, WeaponSO weapon)
+
+    /// <summary>
+    /// Handles with consequences of being hit.
+    /// </summary>
+    /// <param name="hitPoint">world position where the gameobject was hit.</param>
+    /// <param name="direction">the direction hit in.</param>
+    /// <param name="weapon">The weapon used upon the block</param>
+    public override void Punched(Vector2 hitPoint, Vector3 direction, WeaponSO weapon)
     {
-        punchPos = position;
+        // Lower health
+        base.Punched(hitPoint, direction, weapon);
 
-        // If there is at least a distance of 0.5f on either side of the punch intersection.
-        float upHeight = col.bounds.max.y - position.y;
-        print($"upValue: {upHeight}");
-        bool upSide = upHeight >= 0.8f;
-
-        float downHeight = Mathf.Abs(col.bounds.min.y - position.y);
-        print($"downValue: {downHeight}");
-        bool downSide = downHeight >= 0.8f;
-
-        if (upSide && downSide)
+        if (blockHealth <= breakHealth)
         {
             GameObject upperSegment = null;
             GameObject lowerSegment = null;
+            bool split = DestructionManager.SplitSprite(transform, hitPoint, thisMaterial, ref upperSegment, ref lowerSegment);
+            if (!split) return;
 
-            DestructionManager.SplitSprite(gameObject, punchPos.y, thisMaterial, ref upperSegment, ref lowerSegment);
-
-            upperSegment.GetComponent<Rigidbody2D>().AddForceAtPosition(direction * weapon.PushForce * 5f, position, ForceMode2D.Impulse);
-            lowerSegment.GetComponent<Rigidbody2D>().AddForceAtPosition(direction * weapon.PushForce * 5f, position, ForceMode2D.Impulse);
-
-        }
-        else
-        {
-            print("Too small segment");
+            upperSegment.GetComponent<Rigidbody2D>().AddForceAtPosition(direction * weapon.PushForce, hitPoint, ForceMode2D.Impulse);
+            upperSegment.GetComponent<DestructableBlock>().SetHealth(blockHealth);
+            lowerSegment.GetComponent<Rigidbody2D>().AddForceAtPosition(direction * weapon.PushForce, hitPoint, ForceMode2D.Impulse);
+            lowerSegment.GetComponent<DestructableBlock>().SetHealth(blockHealth);
         }
     }
 
     protected override void OnValidate()
     {
         base.OnValidate();
-        col = GetComponent<Collider2D>();
     }
 
     protected override void OnDrawGizmos()
     {
+        if (!Application.isPlaying) return;
+
         Gizmos.color = Color.yellow;
 
-        Vector2 punchCenter = new(col.bounds.center.x, punchPos.y);
-        Gizmos.DrawSphere(punchCenter, 0.15f);
+/*        Gizmos.color = Color.white;
+        Vector2 punchCenter = new(spr.bounds.center.x, lastPunchPosition.y);
+        Gizmos.DrawSphere(punchCenter, 0.1f);
 
+        Gizmos.color = Color.yellow;
         Vector2 punchUp = punchCenter;
-        punchUp += (Vector2)transform.up * segmentationSize;
+        punchUp += (Vector2)transform.up * minimumSegmentSize;
         Gizmos.DrawSphere(punchUp, 0.15f);
 
         Vector2 punchDown = punchCenter;
-        punchDown -= (Vector2)transform.up * segmentationSize;
-        Gizmos.DrawSphere(punchDown, 0.15f);
+        punchDown -= (Vector2)transform.up * minimumSegmentSize;
+        Gizmos.DrawSphere(punchDown, 0.15f);*/
     }
 }

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7090037958646837220}
   - component: {fileID: 8470082891942897108}
-  - component: {fileID: 5476755779594751798}
+  - component: {fileID: 3125708709846337660}
   - component: {fileID: 7479474989956143048}
   - component: {fileID: 6648552738900802172}
   - component: {fileID: 1449664190367336442}
@@ -89,7 +89,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5476755779594751798
+--- !u!114 &3125708709846337660
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,10 +98,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5753752068750660770}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e54388c9166047645ab5a72ab36f6516, type: 3}
+  m_Script: {fileID: 11500000, guid: dafefc75be6a29f41a2a17457a6c1b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   thisMaterial: 1
+  breakVelocity: 8
   blockHealth: 20
   onBreakSound: {fileID: 8300000, guid: 447af4cac78dc5843bdbe214706a5939, type: 3}
   debug: 0
@@ -117,13 +118,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84103340f07b0934d860c750e70890bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rayLength: 0.1
   rb: {fileID: 1449664190367336442}
   audioSource: {fileID: 8751593340222214286}
   connectedJoints: []
-  breakForce: 2000
+  breakForce: 700
   testBool: 0
   connect: 1
-  temp: 0
 --- !u!61 &6648552738900802172
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -182,8 +183,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 3
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 1
+  m_AngularDrag: 0.2
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: 319ad27419ff9094698f392f6230c74e, type: 2}
   m_IncludeLayers:
@@ -193,7 +194,7 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 2
   m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!82 &8751593340222214286

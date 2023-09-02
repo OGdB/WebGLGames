@@ -17,7 +17,7 @@ public class HeadCollision : MonoBehaviour
             if (brickRb)
             {
                 brickRb.AddForceAtPosition(transform.up * headHitForce, collision.contacts[0].point, ForceMode2D.Impulse);
-                brickRb.TryGetComponent(out DestructibleBlock block);
+                brickRb.TryGetComponent(out DestructableBlock block);
                 block?.Punched(collision.contacts[0].point, transform.up, headDamage);
             }
         }

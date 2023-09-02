@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Fists
   m_EditorClassIdentifier: 
   weapon: 1
-  pushForce: 3
-  woodDamage: 10
+  pushForce: 5
+  woodDamage: 1
   onWoodSound: {fileID: 8300000, guid: 80ac97be429a5be488193a8cd97e8a18, type: 3}
   brickDamage: 10
   onBrickSound: {fileID: 8300000, guid: 80ac97be429a5be488193a8cd97e8a18, type: 3}

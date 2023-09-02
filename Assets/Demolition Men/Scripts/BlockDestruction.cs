@@ -27,6 +27,9 @@ public class BlockDestruction : MonoBehaviour
     private RaycastHit2D[] punchBoxCastHits;
     private int currentPunchClip = 0;
     private AudioSource audioSource;
+
+    [Space(15)]
+    public bool debug = false;
     #endregion
 
     #region Initiation
@@ -82,7 +85,6 @@ public class BlockDestruction : MonoBehaviour
         currentPunchClip++;
         currentPunchClip %= punchSoundClips.Length;
 
-        // TODO: Use the 
         foreach (var hit in punchBoxCastHits)
         {
             if (hit)
@@ -92,7 +94,7 @@ public class BlockDestruction : MonoBehaviour
                 {
                     WeaponSO currentWeapon = weapons[currentWeaponData].weaponData;
                     hitBody.AddForceAtPosition(transform.right * currentWeapon.PushForce, hit.point, ForceMode2D.Impulse);
-                    hitBody.TryGetComponent(out DestructibleBlock block);
+                    hitBody.TryGetComponent(out DestructableBlock block);
                     block?.Punched(hit.point, transform.right, currentWeapon);
                 }
 
@@ -109,6 +111,8 @@ public class BlockDestruction : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (!debug) return;
+
         // Punch box
         Vector2 punchBoxPos = (Vector2)transform.position + ((Vector2)transform.right * boxCenterOffset);
         punchBoxPos.y += boxCenterOffset.y;

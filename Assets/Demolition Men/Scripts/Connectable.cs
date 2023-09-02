@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Connectable : MonoBehaviour
 {
+    [SerializeField]
+    private float rayLength = 0.1f;
     public Rigidbody2D rb;
     public AudioSource audioSource;
 
@@ -16,14 +17,23 @@ public class Connectable : MonoBehaviour
     public bool testBool = false;
     public bool connect = true;
 
+    private void Awake()
+    {
+        SpriteRenderer _spr = GetComponent<SpriteRenderer>();
+        rb.mass = _spr.size.x * _spr.size.y;
+    }
+
     private void OnEnable()
     {
         if (!connect) return;
 
-        FindConnections(true, true, true, false);
+        bool hasConnections = FindConnections(true, true, true, true);
+
+        if (hasConnections)
+            rb.Sleep();
     }
 
-    public List<RaycastHit2D> FindConnections(bool left, bool right, bool top, bool bottom)
+    public bool FindConnections(bool left, bool right, bool top, bool bottom)
     {
         List<RaycastHit2D> hits = new();
 
@@ -34,15 +44,36 @@ public class Connectable : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Default");
 
         if (left)
-            hits.Add(Physics2D.Raycast(new Vector2(col.bounds.min.x, col.bounds.center.y), -transform.right, 0.6f, mask));
+        {
+            Vector2 origin = new Vector2(col.bounds.min.x, col.bounds.center.y);
+            hits.Add(Physics2D.Raycast(origin, -transform.right, rayLength, mask));
+            Debug.DrawRay(origin, -transform.right * rayLength, Color.yellow, 7f);
+        }
         if (right)
-            hits.Add(Physics2D.Raycast(new Vector2(col.bounds.max.x, col.bounds.center.y), transform.right, 0.6f, mask));
+        {
+            Vector2 origin = new Vector2(col.bounds.max.x, col.bounds.center.y);
+            hits.Add(Physics2D.Raycast(origin, transform.right, rayLength, mask));
+            Debug.DrawRay(origin, transform.right * rayLength, Color.yellow, 7f);
+
+        }
         if (top)
-            hits.Add(Physics2D.Raycast(new Vector2(col.bounds.center.x, col.bounds.max.y), transform.up, 0.6f, mask));
+        {
+            Vector2 origin = new Vector2(col.bounds.center.x, col.bounds.max.y);
+            hits.Add(Physics2D.Raycast(origin, transform.up, rayLength, mask));
+            Debug.DrawRay(origin, transform.up * rayLength, Color.yellow, 7f);
+
+        }
         if (bottom)
-            hits.Add(Physics2D.Raycast(new Vector2(col.bounds.center.x, col.bounds.min.y), -transform.up, 0.6f, mask));
+        {
+            Vector2 origin = new Vector2(col.bounds.center.x, col.bounds.min.y);
+            hits.Add(Physics2D.Raycast(origin, -transform.up, rayLength, mask));
+            Debug.DrawRay(origin, -transform.up * rayLength, Color.yellow, 7f);
+
+        }
 
         gameObject.layer = LayerMask.NameToLayer("Objects");
+
+        bool hasConnections = false;
 
         foreach (RaycastHit2D hit in hits)
         {
@@ -50,15 +81,16 @@ public class Connectable : MonoBehaviour
             {
                 hit.transform.TryGetComponent(out Connectable conn);
                 if (!conn) continue;
+                hasConnections = true;
 
                 // For each surrounding destructible block, add a fixed joint connecting to that block;
                 FixedJoint2D newJoint = gameObject.AddComponent<FixedJoint2D>();
 
+                newJoint.anchor = transform.InverseTransformPoint(hit.point);
                 newJoint.connectedBody = hit.rigidbody;
                 newJoint.enableCollision = true;
                 newJoint.dampingRatio = 1f;
                 newJoint.breakForce = breakForce;
-                newJoint.anchor = (transform.localPosition - hit.transform.localPosition).normalized / 2f;
                 newJoint.breakAction = JointBreakAction2D.Disable;
 
                 // Add this joint to this block's list of connectedjoints.
@@ -66,7 +98,7 @@ public class Connectable : MonoBehaviour
             }
         }
 
-        return hits;
+        return hasConnections;
 
     }
 

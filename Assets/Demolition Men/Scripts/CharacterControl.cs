@@ -95,41 +95,36 @@ public class CharacterControl : MonoBehaviour
         float xInput = inputReader.MoveInput;
         isGrounded = groundChecker.IsGrounded();
 
-        // Movement & Rotation
-        Movement(xInput);
+        MovementAndRotation(xInput);
 
-        // Fall/Gravity mechanic.
-        BetterGravity();
+        if (!isGrounded)
+            GravityAmplification();
 
+        SetAnimations(xInput);
+    }
+
+    private void SetAnimations(float xInput)
+    {
         // Run Animation
         anim.SetFloat("CurrentSpeed", Mathf.Abs(xInput));
         // Jump/Fall animation
         anim.SetBool("InAir", !isGrounded);
+    }
 
-        void BetterGravity()
+    private void MovementAndRotation(float xInput)
+    {
+        if (xInput != 0)
         {
-            if (rb.velocity.y < 0)
-            {
-                rb.velocity += fallMultiplier * Time.deltaTime * Vector2.up;
-            }
-            else if (rb.velocity.y > 0 && !jumpPressed)
-            {
-                rb.velocity += lowJumpMultiplier * Time.deltaTime * Vector2.up;
-            }
-        }
+            float yRot = xInput > 0 ? 0 : -180f;  // Rotate the character 180 if moving to opposite direction than before.
+            transform.rotation = Quaternion.Euler(0, yRot, 0);
 
-        void Movement(float xInput)
-        {
-            if (xInput != 0)
-            {
-                float yRot = xInput > 0 ? 0 : -180f;  // Rotate the character 180 if moving to opposite direction than before.
-                transform.rotation = Quaternion.Euler(0, yRot, 0);
-
-                // Move in direction of input.
-                rb.velocity = new(xInput * currentXSpeed, rb.velocity.y); ;
-            }
+            // Move in direction of input.
+            //rb.velocity = new(xInput * currentXSpeed, rb.velocity.y);
+            rb.AddForce(transform.right * currentXSpeed, ForceMode2D.Force);
+            
         }
     }
+
 
     // TODO - Double Jump (?)
     /// <summary>
@@ -153,6 +148,22 @@ public class CharacterControl : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// More platform-esque gravity. Increases the speed at which the character falls.
+    /// </summary>
+    private void GravityAmplification()
+    {
+        if (rb.velocity.y < 0)
+        {
+            rb.velocity += fallMultiplier * Time.deltaTime * Vector2.up;
+        }
+        else if (rb.velocity.y > 0 && !jumpPressed)
+        {
+            rb.velocity += lowJumpMultiplier * Time.deltaTime * Vector2.up;
+        }
+    }
+
 
     /// <summary>
     /// Movement Sound ~ Triggered by animation event.

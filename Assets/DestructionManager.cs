@@ -4,6 +4,7 @@ public class DestructionManager : MonoBehaviour
 {
     public static DestructionManager Singleton;
 
+    private static float minimumSegmentSize = 0.65f;
 
     [SerializeField]
     private BlockMaterialToPrefab[] blocks;
@@ -15,62 +16,84 @@ public class DestructionManager : MonoBehaviour
         Singleton = this;
     }
 
-    public static void SplitSprite(GameObject originalGo, float splitHeightPosition, BlockMaterial material, ref GameObject lowerSegment, ref GameObject upperSegment)
+    /// <summary>
+    /// Splits a block inherting from 'DestructableBlock' into two pieces. Designed for sprites with tiled draw modes.
+    /// </summary>
+    /// <param name="origTransform">The transform of the original sprite</param>
+    /// <param name="hitPoint">The point at which the sprite should split.</param>
+    /// <param name="material">The 'blockmaterial' of the DestructableBlock.</param>
+    /// <param name="lowerSegment">The lower segment to return.</param>
+    /// <param name="upperSegment">The upper segment to return.</param>
+    /// <returns>Returns whether a split on this block was possible.</returns>
+    public static bool SplitSprite(Transform origTransform, Vector2 hitPoint, BlockMaterial material, ref GameObject lowerSegment, ref GameObject upperSegment)
     {
-        GameObject blockPrefab = null;
+        // RETRIEVALS
+        GameObject blockPrefab = GetPrefab(material);
+        SpriteRenderer origSpr = origTransform.GetComponent<SpriteRenderer>();
+        Vector2 origSize = origSpr.size;
+        Quaternion origRotation = origTransform.rotation;
+        float yExtent = (origSize.y / 2);
+
+        Vector2 splitCenter = origTransform.InverseTransformPoint(hitPoint);
+        splitCenter.x = 0f;
+        splitCenter = origTransform.TransformPoint(splitCenter);
+
+        // CALCULATIONS
+        // 1. Get upper and lower bound of original block.  ~~ Is not 'local' in .bounds in spr/col.
+        Vector2 upperBound = origTransform.position + origTransform.up * yExtent;
+        Vector2 lowerBound = origTransform.position - origTransform.up * yExtent;
+
+        // 2. Calculate the height of the upper- and lower sub-segment.
+        float upperHeight = Vector2.Distance(upperBound, splitCenter);
+        float lowerHeight = Vector2.Distance(lowerBound, splitCenter);
+
+        // 2.1 Are the heights of the sub-segments above minimum size?
+        bool bigEnough = upperHeight >= minimumSegmentSize && lowerHeight >= minimumSegmentSize;
+        if (!bigEnough)
+        {
+            Debug.Log("One of the sub-segments wasn't big enough");
+            return false;
+        }
+
+        // 3. Calculate the position of the upper- and lower sub-segment.
+        Vector2 upperPos = splitCenter + (Vector2)origTransform.up * upperHeight / 2;
+        Vector2 lowerPos = splitCenter + -(Vector2)origTransform.up * lowerHeight / 2;
+
+        // ASSIGNMENTS
+        // 4. Instantiate and set the calculated variables.
+        // Prefab, position, rotation, name
+        upperSegment = Instantiate(blockPrefab, upperPos, origRotation);
+        lowerSegment = Instantiate(blockPrefab, lowerPos, origRotation);
+        upperSegment.name = "Upper Segment";
+        lowerSegment.name = "Lower Segment";
+        // Size
+        upperSegment.GetComponent<SpriteRenderer>().size = new(origSize.x, upperHeight);
+        lowerSegment.GetComponent<SpriteRenderer>().size = new(origSize.x, lowerHeight);
+
+        // 5. Set connections of the sub-segments.
+        upperSegment.GetComponent<Connectable>().FindConnections(true, true, true, false);
+        lowerSegment.GetComponent<Connectable>().FindConnections(true, true, false, true);
+
+        // 6. Disable original segment.
+        origTransform.gameObject.SetActive(false);
+
+        return true;
+    }
+
+    private static GameObject GetPrefab(BlockMaterial material)
+    {
         foreach (var block in Singleton.Blocks)
         {
             if (block.blockMaterial == material)
             {
-                blockPrefab = block.associatedPrefab;
+                return block.associatedPrefab;
             }
         }
-        if (!blockPrefab)
-        {
-            Debug.LogError("No prefab associated with the material was found.");
-            return;
-        }
 
-        if (!originalGo.TryGetComponent<SpriteRenderer>(out var originalRenderer))
-        {
-            Debug.LogError("The original GameObject does not have a SpriteRenderer component.");
-            return;
-        }
-
-        // Calculate the size and position of the upper and lower parts
-        Vector3 originalSize = originalRenderer.bounds.size;
-        float upperHeight = originalSize.y - (splitHeightPosition - originalRenderer.bounds.min.y);
-        float lowerHeight = splitHeightPosition - originalRenderer.bounds.min.y;
-
-        Vector3 upperSize = new Vector3(originalSize.x, upperHeight, 1f);
-        Vector3 lowerSize = new Vector3(originalSize.x, lowerHeight, 1f);
-
-        Vector3 upperPos = originalRenderer.bounds.center + Vector3.up * (upperHeight * 0.5f);
-        Vector3 lowerPos = originalRenderer.bounds.center - Vector3.up * (lowerHeight * 0.5f);
-
-        Quaternion rotation = originalGo.transform.rotation;
-
-        // Create two new GameObjects for the split parts
-        // Lower
-        lowerSegment = Instantiate(blockPrefab, lowerPos, rotation);
-        lowerSegment.GetComponent<SpriteRenderer>().size = lowerSize;
-        Connectable lowerConnectable = lowerSegment.GetComponent<Connectable>();
-        lowerConnectable.connect = false;
-        lowerConnectable.FindConnections(true, true, false, true);
-        lowerSegment.name = "Lower Segment";
-
-        // Upper
-        upperSegment = Instantiate(blockPrefab, upperPos, rotation);
-        upperSegment.GetComponent<SpriteRenderer>().size = upperSize;
-        Connectable higherConnectable = upperSegment.GetComponent<Connectable>();
-        higherConnectable.connect = false;
-        higherConnectable.FindConnections(true, true, true, false);
-        upperSegment.name = "Upper Segment";
-
-
-        originalGo.SetActive(false);
+        // If this is reached, no prefab instance was found.
+        Debug.LogError("No prefab associated with the material was found.");
+        return null;
     }
-
 }
 
 [System.Serializable]

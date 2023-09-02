@@ -2,13 +2,15 @@ using UnityEditor;
 using UnityEngine;
 
 // TODO: Possible optimization with Dictionary
-public class DestructibleBlock : MonoBehaviour
+public class DestructableBlock : MonoBehaviour
 {
     #region Properties
     [SerializeField]
     protected BlockMaterial thisMaterial = BlockMaterial.Brick;
     [SerializeField]
-    protected int blockHealth = 20;
+    private float breakVelocity = 15f;
+    [SerializeField]
+    protected int blockHealth = 100;
     [SerializeField]
     protected AudioClip onBreakSound;
 
@@ -17,7 +19,18 @@ public class DestructibleBlock : MonoBehaviour
     public bool debug = false;
     #endregion
 
-    protected virtual void Start() => rb = GetComponent<Rigidbody2D>();
+    protected virtual void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.relativeVelocity.magnitude >= breakVelocity)
+        {
+            BreakBlock();
+        }
+    }
 
     public virtual void Punched(Vector2 position, Vector3 direction, WeaponSO weapon)
     {
@@ -54,11 +67,10 @@ public class DestructibleBlock : MonoBehaviour
                 AudioEffectPlayer.PlaySoundEffect(weapon.OnMetalSound, transform.position);
                 ParticleEffectPlayer.PlayMetalParticles(position);
                 break;
-
         }
-
-        rb.AddForceAtPosition(direction * weapon.PushForce, position);
     }
+
+    public void SetHealth(int amount) => blockHealth = amount;
 
     protected void BreakBlock()
     {
@@ -76,11 +88,15 @@ public class DestructibleBlock : MonoBehaviour
 
         Gizmos.color = Color.white;
         DrawLabel(transform.position + Vector3.up * 0.5f, blockHealth.ToString());
+        DrawLabel(transform.position, rb.velocity.magnitude.ToString());
+        DrawLabel(transform.position + Vector3.down, "Sleeping: " + rb.IsSleeping().ToString());
 
         void DrawLabel(Vector3 position, string text)
         {
-            GUIStyle style = new GUIStyle();
-            style.fontSize = 24;
+            GUIStyle style = new()
+            {
+                fontSize = 24
+            };
             style.normal.textColor = Color.white;
             Handles.Label(position, text, style);
         }

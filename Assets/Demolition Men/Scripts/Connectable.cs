@@ -32,8 +32,6 @@ public class Connectable : MonoBehaviour
         if (hasConnections)
         {
             rb.Sleep();
-            if (testBool)
-                print("Put to sleep");
         }
     }
 

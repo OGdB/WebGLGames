@@ -53,8 +53,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1456372009466656275, guid: 1c500c5f1d234e440be387aaf2e80f56, type: 3}
+      propertyPath: m_Actions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: dd51f34b9f06290438565aa060e3b917, type: 3}
+    - target: {fileID: 1456372009466656275, guid: 1c500c5f1d234e440be387aaf2e80f56, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1456372009466656275, guid: 1c500c5f1d234e440be387aaf2e80f56, type: 3}
       propertyPath: m_DefaultActionMap
-      value: PlayerTwo
+      value: Standard
+      objectReference: {fileID: 0}
+    - target: {fileID: 1456372009466656275, guid: 1c500c5f1d234e440be387aaf2e80f56, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: Player Two
+      objectReference: {fileID: 0}
+    - target: {fileID: 1456372009466656275, guid: 1c500c5f1d234e440be387aaf2e80f56, type: 3}
+      propertyPath: m_NeverAutoSwitchControlSchemes
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2847142067201348364, guid: 1c500c5f1d234e440be387aaf2e80f56, type: 3}
       propertyPath: m_Controller

@@ -102,8 +102,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisMaterial: 1
-  breakVelocity: 7
-  destroyVelocity: 12.5
+  breakVelocity: 10
+  destroyVelocity: 14
   blockHealth: 20
   onBreakSound: {fileID: 8300000, guid: 447af4cac78dc5843bdbe214706a5939, type: 3}
   debug: 0

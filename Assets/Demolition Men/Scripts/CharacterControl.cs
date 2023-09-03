@@ -48,7 +48,6 @@ public class CharacterControl : MonoBehaviour
     public bool debug = false;
     #endregion
 
-    #region Initiation
     private void Awake()
     {
         lowJumpMultiplier = (lowJumpMultiplier - 1) * Physics2D.gravity.y;
@@ -58,21 +57,24 @@ public class CharacterControl : MonoBehaviour
         anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
 
-        LayerMask groundLayers = 1 << LayerMask.NameToLayer("Ground") | 1 << LayerMask.NameToLayer("Objects");
+        string thisPlayerLayer = LayerMask.LayerToName(gameObject.layer);
+        var PlayerOneLayer = 1 << LayerMask.NameToLayer("Player1");
+        var playerTwoLayer = 1 << LayerMask.NameToLayer("Player2");
+        LayerMask otherPlayer = thisPlayerLayer == "Player1" ?  playerTwoLayer : PlayerOneLayer;
+        LayerMask walkableLayers = 1 << LayerMask.NameToLayer("Ground") | 1 << LayerMask.NameToLayer("Objects") | otherPlayer;
+        
         Collider2D collider = GetComponent<Collider2D>();
         Vector2 groundCheckBoxSize = new(0.2f, 0.15f);
-        groundChecker = new(groundLayers, groundCheckBoxSize, collider);
+        groundChecker = new(walkableLayers, groundCheckBoxSize, collider);
 
         currentXSpeed = runspeed;
     }
-
-    #endregion
 
     /// <summary>
     /// Called by PlayerInput component on move.
     /// </summary>
     /// <param name="input"></param>
-    public void OnMove(InputValue input)
+    private void OnMove(InputValue input)
     {
         xInput = input.Get<float>();
 
@@ -110,7 +112,7 @@ public class CharacterControl : MonoBehaviour
         currentXSpeed = input.isPressed ? attackMoveSpeed : runspeed;
     }
 
-        private void FixedUpdate()
+    private void FixedUpdate()
     {
         isGrounded = groundChecker.IsGrounded();
         GravityAmplification();

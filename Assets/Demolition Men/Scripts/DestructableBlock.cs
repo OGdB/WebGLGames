@@ -23,6 +23,7 @@ public class DestructableBlock : MonoBehaviour
     private Vector3 particlesPosition;
 
     public bool debug = false;
+    private bool debugBreak = false;
     #endregion
 
     protected virtual void Start()
@@ -49,6 +50,8 @@ public class DestructableBlock : MonoBehaviour
         if (magnitude >= breakVelocity)
         {
             BreakBlock();
+
+            debugBreak = true;
 
             if (magnitude >= destroyVelocity)
             {
@@ -101,6 +104,11 @@ public class DestructableBlock : MonoBehaviour
 
     protected virtual void OnDrawGizmos()
     {
+        if (debugBreak)
+        {
+            Gizmos.DrawCube(transform.position, Vector2.one * 0.5f);
+        }
+
         if (!debug) return;
 
         Gizmos.color = Color.white;

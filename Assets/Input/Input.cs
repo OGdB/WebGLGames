@@ -15,23 +15,23 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public partial class @PlayerInput: IInputActionCollection2, IDisposable
+public partial class @Input: IInputActionCollection2, IDisposable
 {
     public InputActionAsset asset { get; }
-    public @PlayerInput()
+    public @Input()
     {
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""Input"",
     ""maps"": [
         {
-            ""name"": ""PlayerOne"",
+            ""name"": ""Standard"",
             ""id"": ""611e0516-62f0-407c-8f82-8d363f9cde59"",
             ""actions"": [
                 {
                     ""name"": ""Move"",
                     ""type"": ""PassThrough"",
-                    ""id"": ""700b0c69-df14-4ed7-b526-ba857bdca94b"",
-                    ""expectedControlType"": """",
+                    ""id"": ""f9ded7bb-0b2f-4a52-8bae-58a72a7b186b"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -39,7 +39,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Jump"",
                     ""type"": ""PassThrough"",
-                    ""id"": ""d8a894ed-62c0-48c2-b59a-7743e80ce622"",
+                    ""id"": ""20ff304d-9104-42fa-9ab9-6231c107c6ea"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -48,97 +48,16 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Punch"",
                     ""type"": ""PassThrough"",
-                    ""id"": ""47f27cb9-2fa2-413e-925e-d6025baaccb4"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": ""A/D"",
-                    ""id"": ""82f507a9-6800-4782-9b8e-19e3870910ab"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""eb71df10-3513-4bfc-9de6-54e18cc83a35"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""f6ac290f-c3d1-4c7e-a380-819297631ed1"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""63eb1f3c-f7a1-48ee-96e0-cb1cf26ac8b6"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Jump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c59da379-ed4c-453f-8fd3-a02098d183bb"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Punch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""PlayerTwo"",
-            ""id"": ""1bc0128b-cafb-4c99-b3d7-c89c2737303a"",
-            ""actions"": [
-                {
-                    ""name"": ""Move"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""9393889c-72f0-4f1d-af91-46a2500434e9"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Jump"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""39c22e81-7328-4b40-8921-8b2f31ca9057"",
+                    ""id"": ""1628f667-fcfe-44ae-85ad-e8dc1d113641"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Punch"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""4a3714f5-8187-423b-97f9-9a014433f156"",
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""368cfedd-2385-4918-b6ee-5b3913ddb005"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -148,7 +67,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": ""ARROWS"",
-                    ""id"": ""6f9fd9d9-bc5c-4bfc-bd2a-be0349933e80"",
+                    ""id"": ""baf5910c-2c9b-43f2-860c-1e9944d227dd"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -159,63 +78,148 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""negative"",
-                    ""id"": ""a938b708-590b-4107-a7fa-0dac3054d08a"",
+                    ""id"": ""25310993-5339-441b-911e-8080ace530ea"",
                     ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Player Two"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""positive"",
-                    ""id"": ""4ca0f0e6-5f94-438b-956c-336132ae62c9"",
+                    ""id"": ""3a170469-45cc-4c49-a209-63ccf2a4d17b"",
                     ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
+                    ""groups"": ""Player Two"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""AD"",
+                    ""id"": ""819bc235-5070-4054-b84c-0a093cc31fe3"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
                     ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""6a4197ea-f14f-4133-92fe-311f7bda33b0"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Player One"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""b1370507-4900-4690-b29e-4056f418b7e1"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Player One"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9350ab72-6564-4888-878e-5233678b138d"",
+                    ""id"": ""e291b5a2-cd99-436c-bc4b-4381601d78a1"",
                     ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Player Two"",
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""83681cee-f792-46cd-a698-14ca872c3b05"",
+                    ""id"": ""450762e3-c080-4097-a2a4-c53e4d840510"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Player One"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f5cc5aea-fea7-4591-b27d-93598385a373"",
                     ""path"": ""<Keyboard>/rightCtrl"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Player Two"",
                     ""action"": ""Punch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bcd8fe46-cec3-489f-9671-b258d6cae510"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Player One"",
+                    ""action"": ""Punch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c90130c0-4d84-4361-af70-30ccdb2f97cf"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Player One"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
             ]
         }
     ],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""Player Two"",
+            ""bindingGroup"": ""Player Two"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Player One"",
+            ""bindingGroup"": ""Player One"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                }
+            ]
+        }
+    ]
 }");
-        // PlayerOne
-        m_PlayerOne = asset.FindActionMap("PlayerOne", throwIfNotFound: true);
-        m_PlayerOne_Move = m_PlayerOne.FindAction("Move", throwIfNotFound: true);
-        m_PlayerOne_Jump = m_PlayerOne.FindAction("Jump", throwIfNotFound: true);
-        m_PlayerOne_Punch = m_PlayerOne.FindAction("Punch", throwIfNotFound: true);
-        // PlayerTwo
-        m_PlayerTwo = asset.FindActionMap("PlayerTwo", throwIfNotFound: true);
-        m_PlayerTwo_Move = m_PlayerTwo.FindAction("Move", throwIfNotFound: true);
-        m_PlayerTwo_Jump = m_PlayerTwo.FindAction("Jump", throwIfNotFound: true);
-        m_PlayerTwo_Punch = m_PlayerTwo.FindAction("Punch", throwIfNotFound: true);
+        // Standard
+        m_Standard = asset.FindActionMap("Standard", throwIfNotFound: true);
+        m_Standard_Move = m_Standard.FindAction("Move", throwIfNotFound: true);
+        m_Standard_Jump = m_Standard.FindAction("Jump", throwIfNotFound: true);
+        m_Standard_Punch = m_Standard.FindAction("Punch", throwIfNotFound: true);
+        m_Standard_Pause = m_Standard.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -274,28 +278,30 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // PlayerOne
-    private readonly InputActionMap m_PlayerOne;
-    private List<IPlayerOneActions> m_PlayerOneActionsCallbackInterfaces = new List<IPlayerOneActions>();
-    private readonly InputAction m_PlayerOne_Move;
-    private readonly InputAction m_PlayerOne_Jump;
-    private readonly InputAction m_PlayerOne_Punch;
-    public struct PlayerOneActions
+    // Standard
+    private readonly InputActionMap m_Standard;
+    private List<IStandardActions> m_StandardActionsCallbackInterfaces = new List<IStandardActions>();
+    private readonly InputAction m_Standard_Move;
+    private readonly InputAction m_Standard_Jump;
+    private readonly InputAction m_Standard_Punch;
+    private readonly InputAction m_Standard_Pause;
+    public struct StandardActions
     {
-        private @PlayerInput m_Wrapper;
-        public PlayerOneActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_PlayerOne_Move;
-        public InputAction @Jump => m_Wrapper.m_PlayerOne_Jump;
-        public InputAction @Punch => m_Wrapper.m_PlayerOne_Punch;
-        public InputActionMap Get() { return m_Wrapper.m_PlayerOne; }
+        private @Input m_Wrapper;
+        public StandardActions(@Input wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_Standard_Move;
+        public InputAction @Jump => m_Wrapper.m_Standard_Jump;
+        public InputAction @Punch => m_Wrapper.m_Standard_Punch;
+        public InputAction @Pause => m_Wrapper.m_Standard_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_Standard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerOneActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerOneActions instance)
+        public static implicit operator InputActionMap(StandardActions set) { return set.Get(); }
+        public void AddCallbacks(IStandardActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerOneActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerOneActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_StandardActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_StandardActionsCallbackInterfaces.Add(instance);
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
@@ -305,9 +311,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Punch.started += instance.OnPunch;
             @Punch.performed += instance.OnPunch;
             @Punch.canceled += instance.OnPunch;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
-        private void UnregisterCallbacks(IPlayerOneActions instance)
+        private void UnregisterCallbacks(IStandardActions instance)
         {
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
@@ -318,95 +327,49 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Punch.started -= instance.OnPunch;
             @Punch.performed -= instance.OnPunch;
             @Punch.canceled -= instance.OnPunch;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
-        public void RemoveCallbacks(IPlayerOneActions instance)
+        public void RemoveCallbacks(IStandardActions instance)
         {
-            if (m_Wrapper.m_PlayerOneActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_StandardActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerOneActions instance)
+        public void SetCallbacks(IStandardActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerOneActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_StandardActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerOneActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_StandardActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerOneActions @PlayerOne => new PlayerOneActions(this);
-
-    // PlayerTwo
-    private readonly InputActionMap m_PlayerTwo;
-    private List<IPlayerTwoActions> m_PlayerTwoActionsCallbackInterfaces = new List<IPlayerTwoActions>();
-    private readonly InputAction m_PlayerTwo_Move;
-    private readonly InputAction m_PlayerTwo_Jump;
-    private readonly InputAction m_PlayerTwo_Punch;
-    public struct PlayerTwoActions
+    public StandardActions @Standard => new StandardActions(this);
+    private int m_PlayerTwoSchemeIndex = -1;
+    public InputControlScheme PlayerTwoScheme
     {
-        private @PlayerInput m_Wrapper;
-        public PlayerTwoActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_PlayerTwo_Move;
-        public InputAction @Jump => m_Wrapper.m_PlayerTwo_Jump;
-        public InputAction @Punch => m_Wrapper.m_PlayerTwo_Punch;
-        public InputActionMap Get() { return m_Wrapper.m_PlayerTwo; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerTwoActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerTwoActions instance)
+        get
         {
-            if (instance == null || m_Wrapper.m_PlayerTwoActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerTwoActionsCallbackInterfaces.Add(instance);
-            @Move.started += instance.OnMove;
-            @Move.performed += instance.OnMove;
-            @Move.canceled += instance.OnMove;
-            @Jump.started += instance.OnJump;
-            @Jump.performed += instance.OnJump;
-            @Jump.canceled += instance.OnJump;
-            @Punch.started += instance.OnPunch;
-            @Punch.performed += instance.OnPunch;
-            @Punch.canceled += instance.OnPunch;
-        }
-
-        private void UnregisterCallbacks(IPlayerTwoActions instance)
-        {
-            @Move.started -= instance.OnMove;
-            @Move.performed -= instance.OnMove;
-            @Move.canceled -= instance.OnMove;
-            @Jump.started -= instance.OnJump;
-            @Jump.performed -= instance.OnJump;
-            @Jump.canceled -= instance.OnJump;
-            @Punch.started -= instance.OnPunch;
-            @Punch.performed -= instance.OnPunch;
-            @Punch.canceled -= instance.OnPunch;
-        }
-
-        public void RemoveCallbacks(IPlayerTwoActions instance)
-        {
-            if (m_Wrapper.m_PlayerTwoActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(IPlayerTwoActions instance)
-        {
-            foreach (var item in m_Wrapper.m_PlayerTwoActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerTwoActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
+            if (m_PlayerTwoSchemeIndex == -1) m_PlayerTwoSchemeIndex = asset.FindControlSchemeIndex("Player Two");
+            return asset.controlSchemes[m_PlayerTwoSchemeIndex];
         }
     }
-    public PlayerTwoActions @PlayerTwo => new PlayerTwoActions(this);
-    public interface IPlayerOneActions
+    private int m_PlayerOneSchemeIndex = -1;
+    public InputControlScheme PlayerOneScheme
+    {
+        get
+        {
+            if (m_PlayerOneSchemeIndex == -1) m_PlayerOneSchemeIndex = asset.FindControlSchemeIndex("Player One");
+            return asset.controlSchemes[m_PlayerOneSchemeIndex];
+        }
+    }
+    public interface IStandardActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnPunch(InputAction.CallbackContext context);
-    }
-    public interface IPlayerTwoActions
-    {
-        void OnMove(InputAction.CallbackContext context);
-        void OnJump(InputAction.CallbackContext context);
-        void OnPunch(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

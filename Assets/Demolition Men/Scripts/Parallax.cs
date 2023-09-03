@@ -11,10 +11,10 @@ public class Parallax : MonoBehaviour
     private Transform cam;
     private Vector3 previousCamPos;
 
-    private void Awake() => cam = Camera.main.transform;
-
     private void Start()
     {
+        cam = Camera.main.transform;
+
         previousCamPos = cam.position;
 
         // Calculate the width between the left and right borders at the desired depth

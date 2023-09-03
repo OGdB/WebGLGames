@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/WeaponData", order = 1)]
@@ -10,28 +11,38 @@ public class WeaponSO : ScriptableObject
     private float pushForce = 3f;
     public float PushForce { get { return pushForce; } }
 
-    [Header("Wood")]
     [SerializeField]
-    private int woodDamage = 10;
-    public int WoodDamage { get { return woodDamage; } }
-    [SerializeField]
-    private AudioClip onWoodSound;
-    public AudioClip OnWoodSound { get { return onWoodSound; } }
+    private WeaponStats[] weaponStats;
 
-    [Header("Bricks")]
-    [SerializeField]
-    private int brickDamage = 10;
-    public int BrickDamage { get { return brickDamage; } }
-    [SerializeField]
-    private AudioClip onBrickSound;
-    public AudioClip OnBrickSound { get { return onBrickSound; } }
+    public WeaponStats GetWeaponStats(BlockMaterial mat)
+    {
+        foreach (var weaponStats in weaponStats)
+        {
+            if (weaponStats.Material == mat) return weaponStats;
+        }
 
-    [Header("Metal")]
-    [SerializeField]
-    private int metalDamage = 10;
-    public int MetalDamage { get { return metalDamage; } }
-    [SerializeField]
-    private AudioClip onMetalSound;
-    public AudioClip OnMetalSound { get { return onMetalSound; } }
+        return null;
+    }
 
+    [Serializable]
+    public class WeaponStats
+    {
+        public WeaponStats(BlockMaterial material, int damageToMaterial, AudioClip onMaterialHitSound)
+        {
+            this.material = material;
+            this.damageToMaterial = damageToMaterial;
+            this.onMaterialHitSound = onMaterialHitSound;
+        }
+
+        [SerializeField]
+        private BlockMaterial material;
+        [SerializeField]
+        private int damageToMaterial;
+        [SerializeField]
+        private AudioClip onMaterialHitSound;
+
+        public BlockMaterial Material { get => material; }
+        public int DamageToMaterial { get => damageToMaterial; }
+        public AudioClip OnMaterialHitSound { get => onMaterialHitSound; }
+    }
 }

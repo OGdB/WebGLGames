@@ -126,12 +126,12 @@ TextureImporter:
       name: Demolition man Warning V2_0
       rect:
         serializedVersion: 2
-        x: 17
-        y: 386
-        width: 35
-        height: 58
+        x: 0
+        y: 384
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -147,12 +147,12 @@ TextureImporter:
       name: Demolition man Warning V2_1
       rect:
         serializedVersion: 2
-        x: 147
-        y: 386
-        width: 35
-        height: 59
+        x: 128
+        y: 384
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -168,12 +168,12 @@ TextureImporter:
       name: Demolition man Warning V2_2
       rect:
         serializedVersion: 2
-        x: 273
-        y: 386
-        width: 35
-        height: 60
+        x: 256
+        y: 384
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -189,12 +189,12 @@ TextureImporter:
       name: Demolition man Warning V2_3
       rect:
         serializedVersion: 2
-        x: 399
-        y: 386
-        width: 35
-        height: 59
+        x: 384
+        y: 384
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -210,12 +210,12 @@ TextureImporter:
       name: Demolition man Warning V2_4
       rect:
         serializedVersion: 2
-        x: 18
-        y: 322
-        width: 28
-        height: 58
+        x: 0
+        y: 320
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -231,12 +231,12 @@ TextureImporter:
       name: Demolition man Warning V2_5
       rect:
         serializedVersion: 2
-        x: 145
-        y: 329
-        width: 35
-        height: 52
+        x: 128
+        y: 320
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -252,12 +252,12 @@ TextureImporter:
       name: Demolition man Warning V2_6
       rect:
         serializedVersion: 2
-        x: 265
-        y: 321
-        width: 53
-        height: 56
+        x: 256
+        y: 320
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -273,12 +273,12 @@ TextureImporter:
       name: Demolition man Warning V2_7
       rect:
         serializedVersion: 2
-        x: 387
-        y: 328
-        width: 57
-        height: 51
+        x: 384
+        y: 320
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -294,12 +294,12 @@ TextureImporter:
       name: Demolition man Warning V2_8
       rect:
         serializedVersion: 2
-        x: 3
-        y: 264
-        width: 56
-        height: 51
+        x: 0
+        y: 256
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -315,12 +315,12 @@ TextureImporter:
       name: Demolition man Warning V2_9
       rect:
         serializedVersion: 2
-        x: 20
-        y: 194
-        width: 38
-        height: 54
+        x: 0
+        y: 192
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -336,12 +336,12 @@ TextureImporter:
       name: Demolition man Warning V2_10
       rect:
         serializedVersion: 2
-        x: 141
-        y: 194
-        width: 75
-        height: 59
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 128
+        y: 192
+        width: 88
+        height: 64
+      alignment: 9
+      pivot: {x: 0.36363637, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -354,36 +354,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Demolition man Warning V2_11
-      rect:
-        serializedVersion: 2
-        x: 276
-        y: 194
-        width: 38
-        height: 57
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d9a5f0fb706bd7548b29cbff2dea1d0b
-      internalID: 1531162260
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Demolition man Warning V2_12
       rect:
         serializedVersion: 2
-        x: 399
-        y: 194
-        width: 73
-        height: 57
+        x: 256
+        y: 192
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -399,12 +378,12 @@ TextureImporter:
       name: Demolition man Warning V2_13
       rect:
         serializedVersion: 2
-        x: 20
-        y: 130
-        width: 32
-        height: 58
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 384
+        y: 192
+        width: 88
+        height: 64
+      alignment: 9
+      pivot: {x: 0.36363637, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -417,36 +396,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Demolition man Warning V2_14
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 130
-        width: 52
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a6d06c143260883489dab4498599178a
-      internalID: 14815369
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Demolition man Warning V2_15
       rect:
         serializedVersion: 2
-        x: 284
-        y: 130
-        width: 57
-        height: 56
+        x: 0
+        y: 128
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -462,12 +420,12 @@ TextureImporter:
       name: Demolition man Warning V2_16
       rect:
         serializedVersion: 2
-        x: 399
-        y: 130
-        width: 43
-        height: 58
+        x: 128
+        y: 128
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -483,12 +441,12 @@ TextureImporter:
       name: Demolition man Warning V2_17
       rect:
         serializedVersion: 2
-        x: 20
-        y: 66
-        width: 33
-        height: 58
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 256
+        y: 128
+        width: 85
+        height: 64
+      alignment: 9
+      pivot: {x: 0.3764706, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -501,36 +459,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Demolition man Warning V2_18
-      rect:
-        serializedVersion: 2
-        x: 129
-        y: 66
-        width: 51
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 28aec7d827cbd2147918b093a6928151
-      internalID: -827808967
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Demolition man Warning V2_19
       rect:
         serializedVersion: 2
-        x: 284
-        y: 66
-        width: 58
-        height: 56
+        x: 384
+        y: 128
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -546,12 +483,12 @@ TextureImporter:
       name: Demolition man Warning V2_20
       rect:
         serializedVersion: 2
-        x: 399
-        y: 66
-        width: 37
-        height: 58
+        x: 0
+        y: 64
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -567,12 +504,12 @@ TextureImporter:
       name: Demolition man Warning V2_21
       rect:
         serializedVersion: 2
-        x: 4
-        y: 2
-        width: 59
-        height: 58
+        x: 128
+        y: 64
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -588,12 +525,12 @@ TextureImporter:
       name: Demolition man Warning V2_22
       rect:
         serializedVersion: 2
-        x: 144
-        y: 2
-        width: 51
-        height: 58
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 256
+        y: 64
+        width: 86
+        height: 64
+      alignment: 9
+      pivot: {x: 0.37209302, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -606,22 +543,85 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Demolition man Warning V2_23
+      name: Demolition man Warning V2_24
       rect:
         serializedVersion: 2
-        x: 290
-        y: 3
-        width: 52
-        height: 53
+        x: 384
+        y: 64
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 92c88aa0b5ff91b46bfe5af31ce318aa
-      internalID: -1236645119
+      spriteID: ae638c19a5095b147b34232bd96ce726
+      internalID: -1991772610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Demolition man Warning V2_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 445b93e25704a4840b1410ad6f47a17e
+      internalID: 1099332719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Demolition man Warning V2_26
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 67
+        height: 64
+      alignment: 9
+      pivot: {x: 0.47761193, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c5f704acf2a6d84fa77700f9223141d
+      internalID: -862619005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Demolition man Warning V2_28
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 86
+        height: 64
+      alignment: 9
+      pivot: {x: 0.37209302, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 812f35aa902ce8c4f882982545ddf16f
+      internalID: -1910840930
       vertices: []
       indices: 
       edges: []
@@ -654,6 +654,12 @@ TextureImporter:
       Demolition man Warning V2_21: 1677772602
       Demolition man Warning V2_22: 1398852790
       Demolition man Warning V2_23: -1236645119
+      Demolition man Warning V2_24: -1991772610
+      Demolition man Warning V2_25: 1099332719
+      Demolition man Warning V2_26: -862619005
+      Demolition man Warning V2_27: 409952750
+      Demolition man Warning V2_28: -1910840930
+      Demolition man Warning V2_29: 1985003652
       Demolition man Warning V2_3: -1368557615
       Demolition man Warning V2_4: 1615642842
       Demolition man Warning V2_5: 466840188

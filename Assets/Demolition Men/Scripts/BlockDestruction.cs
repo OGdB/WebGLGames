@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Responsible for any of the player's interaction with the destructible environment
@@ -22,7 +23,6 @@ public class BlockDestruction : MonoBehaviour
     private LayerMask punchableMasks;
 
     // PRIVATES
-    private InputReader inputReader;
     private Animator anim;
     private RaycastHit2D[] punchBoxCastHits;
     private int currentPunchClip = 0;
@@ -32,26 +32,13 @@ public class BlockDestruction : MonoBehaviour
     public bool debug = false;
     #endregion
 
-    #region Initiation
     private void Awake()
     {
-        inputReader = GetComponent<InputReader>();
         audioSource = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
 
         SetWeapon(Weapon.Fists);
     }
-    private void OnEnable()
-    {
-        inputReader.Standard.Punch.started += _ => Attack();
-        inputReader.Standard.Punch.canceled += _ => StopAttack();
-    }
-    private void OnDisable()
-    {
-        inputReader.Standard.Punch.started -= _ => Attack();
-        inputReader.Standard.Punch.canceled -= _ => StopAttack();
-    }
-    #endregion
 
     private void FixedUpdate() => PunchOverlapBoxCast();
 
@@ -68,16 +55,11 @@ public class BlockDestruction : MonoBehaviour
         }
     }
     public void SetWeapon(int newWeapon) => SetWeapon((Weapon)newWeapon);
-
-    private void Attack()
+    private void OnPunch(InputValue input)
     {
-        anim.Play(currentWeapon.ToString());
+        string animation = input.isPressed ? currentWeapon.ToString() : "Idle";
+        anim.Play(animation);
     }
-    private void StopAttack()
-    {
-        anim.Play("Idle");
-    }
-
     public void Hit()
     {
         // Audio
@@ -97,7 +79,6 @@ public class BlockDestruction : MonoBehaviour
                     hitBody.TryGetComponent(out DestructableBlock block);
                     block?.Punched(hit.point, transform.right, currentWeapon);
                 }
-
             }
         }
     }

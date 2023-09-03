@@ -8,7 +8,9 @@ public class DestructableBlock : MonoBehaviour
     [SerializeField]
     protected BlockMaterial thisMaterial = BlockMaterial.Brick;
     [SerializeField]
-    private float breakVelocity = 15f;
+    private float breakVelocity = 10f;
+    [SerializeField]
+    private float destroyVelocity = 15f;
     [SerializeField]
     protected int blockHealth = 100;
     [SerializeField]
@@ -16,25 +18,64 @@ public class DestructableBlock : MonoBehaviour
 
     protected Rigidbody2D rb;
 
+    private delegate void ParticleEffects();
+    private ParticleEffects PlayParticleEffects;
+    private Vector3 particlesPosition;
+
     public bool debug = false;
     #endregion
 
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        switch (thisMaterial)
+        {
+            case BlockMaterial.Brick:
+                PlayParticleEffects += () => ParticleEffectPlayer.PlayBrickParticles(particlesPosition);
+                break;
+            case BlockMaterial.Wood:
+                PlayParticleEffects += () => ParticleEffectPlayer.PlayWoodParticles(particlesPosition);
+                break;
+            case BlockMaterial.Metal:
+                PlayParticleEffects += () => ParticleEffectPlayer.PlayMetalParticles(particlesPosition);
+                break;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.relativeVelocity.magnitude >= breakVelocity)
+        float magnitude = collision.relativeVelocity.magnitude;
+        if (magnitude >= breakVelocity)
         {
             BreakBlock();
+
+            if (magnitude >= destroyVelocity)
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 
+    /// <summary>
+    /// Called when the block is hit.
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="direction"></param>
+    /// <param name="weapon"></param>
     public virtual void Punched(Vector2 position, Vector3 direction, WeaponSO weapon)
     {
-        DamageBlock(position, direction, weapon);
+        // The information on the effects of this weapon to this block.
+        WeaponSO.WeaponStats weaponStats = weapon.GetWeaponStats(thisMaterial);
+
+        // Damage to material
+        blockHealth -= weaponStats.DamageToMaterial;
+        // Sound
+        AudioEffectPlayer.PlaySoundEffect(weaponStats.OnMaterialHitSound, transform.position);
+        // Particles
+        particlesPosition = position;
+        PlayParticleEffects();
+
 
         if (blockHealth <= 0)
         {
@@ -43,30 +84,6 @@ public class DestructableBlock : MonoBehaviour
         if (blockHealth <= -20)
         {
             gameObject.SetActive(false);
-        }
-    }
-
-    protected void DamageBlock(Vector2 position, Vector3 direction, WeaponSO weapon)
-    {
-        switch (thisMaterial)
-        {
-            case BlockMaterial.Brick:
-                blockHealth -= weapon.BrickDamage; // Damage
-                AudioEffectPlayer.PlaySoundEffect(weapon.OnBrickSound, transform.position);
-                ParticleEffectPlayer.PlayBrickParticles(position);
-                break;
-
-            case BlockMaterial.Wood:
-                blockHealth -= weapon.WoodDamage; // Damage
-                AudioEffectPlayer.PlaySoundEffect(weapon.OnWoodSound, transform.position);
-                ParticleEffectPlayer.PlayWoodParticles(position);
-                break;
-
-            case BlockMaterial.Metal:
-                blockHealth -= weapon.MetalDamage; // Damage
-                AudioEffectPlayer.PlaySoundEffect(weapon.OnMetalSound, transform.position);
-                ParticleEffectPlayer.PlayMetalParticles(position);
-                break;
         }
     }
 

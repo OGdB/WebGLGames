@@ -30,7 +30,11 @@ public class Connectable : MonoBehaviour
         bool hasConnections = FindConnections(true, true, true, true);
 
         if (hasConnections)
+        {
             rb.Sleep();
+            if (testBool)
+                print("Put to sleep");
+        }
     }
 
     public bool FindConnections(bool left, bool right, bool top, bool bottom)

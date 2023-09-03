@@ -102,7 +102,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisMaterial: 1
-  breakVelocity: 8
+  breakVelocity: 7
+  destroyVelocity: 12.5
   blockHealth: 20
   onBreakSound: {fileID: 8300000, guid: 447af4cac78dc5843bdbe214706a5939, type: 3}
   debug: 0
@@ -122,7 +123,7 @@ MonoBehaviour:
   rb: {fileID: 1449664190367336442}
   audioSource: {fileID: 8751593340222214286}
   connectedJoints: []
-  breakForce: 700
+  breakForce: 800
   testBool: 0
   connect: 1
 --- !u!61 &6648552738900802172

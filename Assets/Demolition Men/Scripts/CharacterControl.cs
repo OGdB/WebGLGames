@@ -1,14 +1,16 @@
+using System;
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CharacterControl : MonoBehaviour
 {
     #region Properties
     [Header("Run Settings"), SerializeField]
-    private float runspeed = 5f;
+    private float runspeed = 50f;
     [SerializeField]
-    private float punchMoveSpeed = 3.5f;
+    private float attackMoveSpeed = 30f;
     private float currentXSpeed;
     [SerializeField, Range(0f, 1f)]
     private float stepVolume = 1f;
@@ -17,9 +19,9 @@ public class CharacterControl : MonoBehaviour
 
 
     [Header("Jump Settings"), SerializeField]
-    private float jumpForce = 8f;
+    private float jumpForce = 16;
     [SerializeField, Tooltip("Time in seconds of cooldown between jumps.")]
-    private float jumpCooldownTime = 0.5f;
+    private float jumpCooldownTime = 0.3f;
     [SerializeField, Range(0f, 1f)]
     private float jumpVolume = 1f;
     [SerializeField]
@@ -31,7 +33,7 @@ public class CharacterControl : MonoBehaviour
     private float lowJumpMultiplier = 2f;
 
     // PRIVATE
-    private InputReader inputReader;
+    private float xInput = 0;
     private Rigidbody2D rb;
     private Animator anim;
     private AudioSource audioSource;
@@ -49,7 +51,6 @@ public class CharacterControl : MonoBehaviour
     #region Initiation
     private void Awake()
     {
-        inputReader = GetComponent<InputReader>();
         lowJumpMultiplier = (lowJumpMultiplier - 1) * Physics2D.gravity.y;
         fallMultiplier = (fallMultiplier - 1) * Physics2D.gravity.y;
 
@@ -65,75 +66,31 @@ public class CharacterControl : MonoBehaviour
         currentXSpeed = runspeed;
     }
 
-    private void OnEnable()
-    {
-        // Jump
-        inputReader.Standard.Jump.performed += _ => Jump();
-        inputReader.Standard.Jump.started += _ => jumpPressed = true;
-        inputReader.Standard.Jump.canceled += _ => jumpPressed = false;
-
-        // Slower movement whilst punching 
-        inputReader.Standard.Punch.started += _ => currentXSpeed = punchMoveSpeed;
-        inputReader.Standard.Punch.canceled += _ => currentXSpeed = runspeed;
-    }
-
-    private void OnDisable()
-    {
-        // Jump
-        inputReader.Standard.Jump.performed -= _ => Jump();
-        inputReader.Standard.Jump.started -= _ => jumpPressed = true;
-        inputReader.Standard.Jump.canceled -= _ => jumpPressed = false;
-
-        // Slower movement whilst punching 
-        inputReader.Standard.Punch.started -= _ => currentXSpeed = punchMoveSpeed;
-        inputReader.Standard.Punch.canceled -= _ => currentXSpeed = runspeed;
-    }
     #endregion
 
-    private void FixedUpdate()
+    /// <summary>
+    /// Called by PlayerInput component on move.
+    /// </summary>
+    /// <param name="input"></param>
+    public void OnMove(InputValue input)
     {
-        float xInput = inputReader.MoveInput;
-        isGrounded = groundChecker.IsGrounded();
+        xInput = input.Get<float>();
 
-        MovementAndRotation(xInput);
+        if (xInput == 0) return;
 
-        if (!isGrounded)
-            GravityAmplification();
-
-        SetAnimations(xInput);
+        float yRot = xInput > 0 ? 0 : -180f;  // Rotate the character 180 if moving to opposite direction than before.
+        transform.rotation = Quaternion.Euler(0, yRot, 0);
     }
-
-    private void SetAnimations(float xInput)
-    {
-        // Run Animation
-        anim.SetFloat("CurrentSpeed", Mathf.Abs(xInput));
-        // Jump/Fall animation
-        anim.SetBool("InAir", !isGrounded);
-    }
-
-    private void MovementAndRotation(float xInput)
-    {
-        if (xInput != 0)
-        {
-            float yRot = xInput > 0 ? 0 : -180f;  // Rotate the character 180 if moving to opposite direction than before.
-            transform.rotation = Quaternion.Euler(0, yRot, 0);
-
-            // Move in direction of input.
-            //rb.velocity = new(xInput * currentXSpeed, rb.velocity.y);
-            rb.AddForce(transform.right * currentXSpeed, ForceMode2D.Force);
-            
-        }
-    }
-
-
     // TODO - Double Jump (?)
     /// <summary>
-    /// Simple jump with cooldown.
+    /// Called by PlayerInput once on jump.
     /// If on the ground and there is no cooldown, player can jump.
     /// </summary>
-    private void Jump()
+    private void OnJump(InputValue value)
     {
-        if (isGrounded && !jumpCooldown)
+        jumpPressed = value.isPressed;
+
+        if (jumpPressed && isGrounded && !jumpCooldown)
         {
             audioSource.PlayOneShot(jumpSound, jumpVolume);
             rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
@@ -148,12 +105,28 @@ public class CharacterControl : MonoBehaviour
             }
         }
     }
+    private void OnPunch(InputValue input)
+    {
+        currentXSpeed = input.isPressed ? attackMoveSpeed : runspeed;
+    }
+
+        private void FixedUpdate()
+    {
+        isGrounded = groundChecker.IsGrounded();
+        GravityAmplification();
+
+        SetAnimations();
+
+        Movement();
+    }
 
     /// <summary>
     /// More platform-esque gravity. Increases the speed at which the character falls.
     /// </summary>
     private void GravityAmplification()
     {
+        if (isGrounded) return;  // don't need to add add gravity if player is already on the ground.
+
         if (rb.velocity.y < 0)
         {
             rb.velocity += fallMultiplier * Time.deltaTime * Vector2.up;
@@ -162,6 +135,26 @@ public class CharacterControl : MonoBehaviour
         {
             rb.velocity += lowJumpMultiplier * Time.deltaTime * Vector2.up;
         }
+    }
+
+    /// <summary>
+    /// Set animations based on key values.
+    /// </summary>
+    private void SetAnimations()
+    {
+        // Run Animation
+        anim.SetFloat("CurrentSpeed", Mathf.Abs(xInput));
+        // Jump/Fall animation
+        anim.SetBool("InAir", !isGrounded);
+    }
+
+    /// <summary>
+    /// Move in forward dirrection if there is input.
+    /// </summary>
+    private void Movement()
+    {
+        if (xInput == 0) return;
+        rb.AddForce(transform.right * currentXSpeed, ForceMode2D.Force);
     }
 
 

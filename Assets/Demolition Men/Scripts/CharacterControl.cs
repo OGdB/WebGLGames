@@ -70,6 +70,28 @@ public class CharacterControl : MonoBehaviour
         currentXSpeed = runspeed;
     }
 
+    private void OnEnable()
+    {
+        PauseMenu.OnPause += PauseMenu_OnPause;
+    }
+
+    private void PauseMenu_OnPause(bool isPaused)
+    {
+        if (isPaused)
+        {
+            GetComponent<PlayerInput>().DeactivateInput();
+        }
+        else
+        {
+            GetComponent<PlayerInput>().ActivateInput();
+        }
+    }
+
+    private void OnDisable()
+    {
+        PauseMenu.OnPause -= PauseMenu_OnPause;
+    }
+
     /// <summary>
     /// Called by PlayerInput component on move.
     /// </summary>

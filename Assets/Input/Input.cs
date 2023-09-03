@@ -53,15 +53,6 @@ public partial class @Input: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Pause"",
-                    ""type"": ""Button"",
-                    ""id"": ""368cfedd-2385-4918-b6ee-5b3913ddb005"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -174,17 +165,6 @@ public partial class @Input: IInputActionCollection2, IDisposable
                     ""action"": ""Punch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c90130c0-4d84-4361-af70-30ccdb2f97cf"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Player One"",
-                    ""action"": ""Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -219,7 +199,6 @@ public partial class @Input: IInputActionCollection2, IDisposable
         m_Standard_Move = m_Standard.FindAction("Move", throwIfNotFound: true);
         m_Standard_Jump = m_Standard.FindAction("Jump", throwIfNotFound: true);
         m_Standard_Punch = m_Standard.FindAction("Punch", throwIfNotFound: true);
-        m_Standard_Pause = m_Standard.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -284,7 +263,6 @@ public partial class @Input: IInputActionCollection2, IDisposable
     private readonly InputAction m_Standard_Move;
     private readonly InputAction m_Standard_Jump;
     private readonly InputAction m_Standard_Punch;
-    private readonly InputAction m_Standard_Pause;
     public struct StandardActions
     {
         private @Input m_Wrapper;
@@ -292,7 +270,6 @@ public partial class @Input: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Standard_Move;
         public InputAction @Jump => m_Wrapper.m_Standard_Jump;
         public InputAction @Punch => m_Wrapper.m_Standard_Punch;
-        public InputAction @Pause => m_Wrapper.m_Standard_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Standard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -311,9 +288,6 @@ public partial class @Input: IInputActionCollection2, IDisposable
             @Punch.started += instance.OnPunch;
             @Punch.performed += instance.OnPunch;
             @Punch.canceled += instance.OnPunch;
-            @Pause.started += instance.OnPause;
-            @Pause.performed += instance.OnPause;
-            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IStandardActions instance)
@@ -327,9 +301,6 @@ public partial class @Input: IInputActionCollection2, IDisposable
             @Punch.started -= instance.OnPunch;
             @Punch.performed -= instance.OnPunch;
             @Punch.canceled -= instance.OnPunch;
-            @Pause.started -= instance.OnPause;
-            @Pause.performed -= instance.OnPause;
-            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IStandardActions instance)
@@ -370,6 +341,5 @@ public partial class @Input: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnPunch(InputAction.CallbackContext context);
-        void OnPause(InputAction.CallbackContext context);
     }
 }

@@ -50,8 +50,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisMaterial: 1
-  breakVelocity: 8
-  blockHealth: 20
+  breakVelocity: 13
+  destroyVelocity: 16
+  blockHealth: 100
   onBreakSound: {fileID: 8300000, guid: 447af4cac78dc5843bdbe214706a5939, type: 3}
   debug: 0
   breakHealth: 10

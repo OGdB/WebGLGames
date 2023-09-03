@@ -31,15 +31,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Pause",
-                    "type": "Button",
-                    "id": "368cfedd-2385-4918-b6ee-5b3913ddb005",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -150,17 +141,6 @@
                     "processors": "",
                     "groups": "Player One",
                     "action": "Punch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c90130c0-4d84-4361-af70-30ccdb2f97cf",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Player One",
-                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

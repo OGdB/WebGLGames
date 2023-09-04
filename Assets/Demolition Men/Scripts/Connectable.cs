@@ -46,27 +46,27 @@ public class Connectable : MonoBehaviour
 
         if (left)
         {
-            Vector2 origin = new Vector2(col.bounds.min.x, col.bounds.center.y);
+            Vector2 origin = new(col.bounds.min.x, col.bounds.center.y);
             hits.Add(Physics2D.Raycast(origin, -transform.right, rayLength, mask));
             //Debug.DrawRay(origin, -transform.right * rayLength, Color.yellow, 7f);
         }
         if (right)
         {
-            Vector2 origin = new Vector2(col.bounds.max.x, col.bounds.center.y);
+            Vector2 origin = new(col.bounds.max.x, col.bounds.center.y);
             hits.Add(Physics2D.Raycast(origin, transform.right, rayLength, mask));
             //Debug.DrawRay(origin, transform.right * rayLength, Color.yellow, 7f);
 
         }
         if (top)
         {
-            Vector2 origin = new Vector2(col.bounds.center.x, col.bounds.max.y);
+            Vector2 origin = new(col.bounds.center.x, col.bounds.max.y);
             hits.Add(Physics2D.Raycast(origin, transform.up, rayLength, mask));
             //Debug.DrawRay(origin, transform.up * rayLength, Color.yellow, 7f);
 
         }
         if (bottom)
         {
-            Vector2 origin = new Vector2(col.bounds.center.x, col.bounds.min.y);
+            Vector2 origin = new(col.bounds.center.x, col.bounds.min.y);
             hits.Add(Physics2D.Raycast(origin, -transform.up, rayLength, mask));
             //Debug.DrawRay(origin, -transform.up * rayLength, Color.yellow, 7f);
         }

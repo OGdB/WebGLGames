@@ -23,7 +23,6 @@ public class DestructableBlock : MonoBehaviour
     private delegate void ParticleEffects();
     private ParticleEffects PlayParticleEffects;
     private Vector3 particlesPosition;
-    private AudioSource audioSource;
 
     public bool debug = false;
     private bool debugBreak = false;
@@ -32,7 +31,7 @@ public class DestructableBlock : MonoBehaviour
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        audioSource = GetComponent<AudioSource>();
+        BlackBoard.AmountOfBlocks++;
 
         switch (thisMaterial)
         {
@@ -64,7 +63,7 @@ public class DestructableBlock : MonoBehaviour
 
                 if (magnitude >= destroyVelocity)
                 {
-                    gameObject.SetActive(false);
+                    DestroyBlock();
                 }
             }
         }
@@ -96,7 +95,7 @@ public class DestructableBlock : MonoBehaviour
         }
         if (blockHealth <= -20)
         {
-            gameObject.SetActive(false);
+            DestroyBlock();
         }
     }
 
@@ -107,6 +106,13 @@ public class DestructableBlock : MonoBehaviour
         TryGetComponent(out Connectable conn);
         conn?.BreakConnection();
         AudioEffectPlayer.PlaySoundEffect(onBreakSound, transform.position);
+    }
+    protected void DestroyBlock()
+    {
+        BlackBoard.BlocksDestroyed++;
+        BlackBoard.AmountOfBlocks--;
+        Score.SetScore(BlackBoard.BlocksDestroyed);
+        gameObject.SetActive(false);
     }
 
     #region Gizmos

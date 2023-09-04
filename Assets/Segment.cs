@@ -28,6 +28,7 @@ public class Segment : DestructableBlock
             bool split = DestructionManager.SplitSprite(transform, hitPoint, thisMaterial, ref upperSegment, ref lowerSegment);
             if (!split) return;
 
+            BlackBoard.AmountOfBlocks--; // One block is now 2 blocks.
             upperSegment.GetComponent<Rigidbody2D>().AddForceAtPosition(direction * weapon.PushForce, hitPoint, ForceMode2D.Impulse);
             upperSegment.GetComponent<DestructableBlock>().SetHealth(blockHealth);
             lowerSegment.GetComponent<Rigidbody2D>().AddForceAtPosition(direction * weapon.PushForce, hitPoint, ForceMode2D.Impulse);

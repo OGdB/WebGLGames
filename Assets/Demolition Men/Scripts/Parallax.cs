@@ -3,24 +3,17 @@ using UnityEngine;
 
 public class Parallax : MonoBehaviour
 {
-    public ParallaxLayer[] parallaxLayers;
-    public float smoothing = 1f;
+    [SerializeField]
+    private ParallaxLayer[] parallaxLayers;
+    [SerializeField]
+    private float smoothing = 1f;
 
-    private float loopThreshold = 960;
-
+    [SerializeField]
     private Transform cam;
     private Vector3 previousCamPos;
+    private float loopThreshold = 960;
 
-    private void Start()
-    {
-        cam = Camera.main.transform;
-
-        previousCamPos = cam.position;
-
-        // Calculate the width between the left and right borders at the desired depth
-        float height = 2f * Camera.main.orthographicSize;
-        loopThreshold = height * Camera.main.aspect / 2f;
-    }
+    private void Start() => previousCamPos = cam.position;
 
 
     private void LateUpdate()
@@ -28,20 +21,22 @@ public class Parallax : MonoBehaviour
         for (int i = 0; i < parallaxLayers.Length; i++)
         {
             ParallaxLayer layer = parallaxLayers[i];
-
+            // Move the layer in the direction the player camera moves in.
+            // Get the values
             float parallaxX = (previousCamPos.x - cam.position.x) * layer.speed;
+            float targetPosX = layer.transform.anchoredPosition.x + parallaxX;
+            Vector3 targetPos = new(targetPosX, layer.transform.anchoredPosition.y);
 
-            float targetPosX = layer.transform.position.x + parallaxX;
-
-            Vector3 targetPos = new(targetPosX, layer.transform.position.y, layer.transform.position.z);
-
-            layer.transform.position = Vector3.Lerp(layer.transform.position, targetPos, smoothing * Time.deltaTime);
+            // Apply with lerp.
+            layer.transform.anchoredPosition = Vector3.Lerp(layer.transform.anchoredPosition, targetPos, smoothing * Time.deltaTime);
 
             // Looping logic
             // If loopthreshold is passed, loop positions.
-            if (Mathf.Abs(layer.transform.position.x) > loopThreshold)
+            if (Mathf.Abs(layer.transform.anchoredPosition.x) > loopThreshold)
             {
-                layer.transform.position = new(loopThreshold * -Mathf.Sign(layer.transform.position.x), layer.transform.position.y, layer.transform.position.z);
+                // Set the x position of the layer to 
+                Vector3 loopPos = new(loopThreshold * -Mathf.Sign(layer.transform.anchoredPosition.x), layer.transform.anchoredPosition.y);
+                layer.transform.anchoredPosition = loopPos;
             }
         }
 
@@ -51,7 +46,7 @@ public class Parallax : MonoBehaviour
     [Serializable]
     public class ParallaxLayer
     {
-        public Transform transform;
+        public RectTransform transform;
         public float speed;
     }
 }

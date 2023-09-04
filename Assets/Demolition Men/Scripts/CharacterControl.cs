@@ -4,6 +4,9 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Class responsible for controlling this character (and its associated animations).
+/// </summary>
 public class CharacterControl : MonoBehaviour
 {
     #region Properties
@@ -27,22 +30,25 @@ public class CharacterControl : MonoBehaviour
     [SerializeField]
     private AudioClip jumpSound;
 
+
     [Header("Gravity Fall Settings"), SerializeField]
     private float fallMultiplier = 2.5f;
     [SerializeField]
     private float lowJumpMultiplier = 2f;
 
+
     // PRIVATE
-    private float xInput = 0;
     private Rigidbody2D rb;
     private Animator anim;
     private AudioSource audioSource;
-    private bool isGrounded = false;
 
+    private float xInput = 0;
+    private bool isGrounded = false;
     private int currentStepSound = 0;
     private bool jumpPressed = false;
     private bool jumpCooldown = false;
     private GroundedChecker groundChecker;
+    private AmplifiedGravity gravity;
 
     [Space(15)]
     public bool debug = false;
@@ -68,13 +74,23 @@ public class CharacterControl : MonoBehaviour
         groundChecker = new(walkableLayers, groundCheckBoxSize, collider);
 
         currentXSpeed = runspeed;
+
+        gravity = new(rb, fallMultiplier, lowJumpMultiplier);
     }
 
     private void OnEnable()
     {
         PauseMenu.OnPause += PauseMenu_OnPause;
     }
+    private void OnDisable()
+    {
+        PauseMenu.OnPause -= PauseMenu_OnPause;
+    }
 
+    /// <summary>
+    /// Activate / De-activate input on pause.
+    /// </summary>
+    /// <param name="isPaused"></param>
     private void PauseMenu_OnPause(bool isPaused)
     {
         if (isPaused)
@@ -85,11 +101,6 @@ public class CharacterControl : MonoBehaviour
         {
             GetComponent<PlayerInput>().ActivateInput();
         }
-    }
-
-    private void OnDisable()
-    {
-        PauseMenu.OnPause -= PauseMenu_OnPause;
     }
 
     /// <summary>
@@ -137,28 +148,13 @@ public class CharacterControl : MonoBehaviour
     private void FixedUpdate()
     {
         isGrounded = groundChecker.IsGrounded();
-        GravityAmplification();
+
+        if (!isGrounded) 
+            gravity.GravityAmplification(jumpPressed);
 
         SetAnimations();
 
         Movement();
-    }
-
-    /// <summary>
-    /// More platform-esque gravity. Increases the speed at which the character falls.
-    /// </summary>
-    private void GravityAmplification()
-    {
-        if (isGrounded) return;  // don't need to add add gravity if player is already on the ground.
-
-        if (rb.velocity.y < 0)
-        {
-            rb.velocity += fallMultiplier * Time.deltaTime * Vector2.up;
-        }
-        else if (rb.velocity.y > 0 && !jumpPressed)
-        {
-            rb.velocity += lowJumpMultiplier * Time.deltaTime * Vector2.up;
-        }
     }
 
     /// <summary>

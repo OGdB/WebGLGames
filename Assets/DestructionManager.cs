@@ -66,9 +66,13 @@ public class DestructionManager : MonoBehaviour
         lowerSegment = Instantiate(blockPrefab, lowerPos, origRotation);
         upperSegment.name = "Upper Segment";
         lowerSegment.name = "Lower Segment";
+
         // Size
         upperSegment.GetComponent<SpriteRenderer>().size = new(origSize.x, upperHeight);
         lowerSegment.GetComponent<SpriteRenderer>().size = new(origSize.x, lowerHeight);
+
+        // TODO ~ 
+        // Connections shouldn't be made in directions the original block had no connections in.
 
         // 5. Set connections of the sub-segments.
         upperSegment.GetComponent<Connectable>().FindConnections(true, true, true, false);

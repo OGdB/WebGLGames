@@ -23,19 +23,44 @@ public class PlayerJoiner : MonoBehaviour
 
     private void Start()
     {
-        PlayerInput.Instantiate(playerOnePrefab, controlScheme: "Player One", pairWithDevice: Keyboard.current);
-        PlayerInput.Instantiate(playerTwoPrefab, controlScheme: "Player Two", pairWithDevice: Keyboard.current);
+        if (playerOnePrefab)
+            PlayerInput.Instantiate(playerOnePrefab, controlScheme: "Player One", pairWithDevice: Keyboard.current);
+        if (playerTwoPrefab)
+            PlayerInput.Instantiate(playerTwoPrefab, controlScheme: "Player Two", pairWithDevice: Keyboard.current);
     }
 
-/*    private void Update()
+    private void SpawnPlayerOne()
     {
-        if (testBool)
+        if (playerOnePrefab)
         {
-            testBool = false;
-
-            GetComponent<PlayerInputManager>().playerPrefab = playerTwoPrefab;
-
+            PlayerInput.Instantiate(playerOnePrefab, controlScheme: "Player One", pairWithDevice: Keyboard.current);
+        }
+        else
+        {
+            Debug.LogWarning("Player one prefab missing.");
+        }
+    }
+    private void SpawnPlayerTwo()
+    {
+        if (playerTwoPrefab)
+        {
             PlayerInput.Instantiate(playerTwoPrefab, controlScheme: "Player Two", pairWithDevice: Keyboard.current);
         }
-    }*/
+        else
+        {
+            Debug.LogWarning("Player two prefab missing.");
+        }
+    }
+
+    /*    private void Update()
+        {
+            if (testBool)
+            {
+                testBool = false;
+
+                GetComponent<PlayerInputManager>().playerPrefab = playerTwoPrefab;
+
+                PlayerInput.Instantiate(playerTwoPrefab, controlScheme: "Player Two", pairWithDevice: Keyboard.current);
+            }
+        }*/
 }

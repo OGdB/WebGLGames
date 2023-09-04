@@ -6,7 +6,6 @@ public class Connectable : MonoBehaviour
     [SerializeField]
     private float rayLength = 0.1f;
     public Rigidbody2D rb;
-    public AudioSource audioSource;
 
     // Joints which have a connection to this block.
     public List<FixedJoint2D> connectedJoints = new();
@@ -49,28 +48,27 @@ public class Connectable : MonoBehaviour
         {
             Vector2 origin = new Vector2(col.bounds.min.x, col.bounds.center.y);
             hits.Add(Physics2D.Raycast(origin, -transform.right, rayLength, mask));
-            Debug.DrawRay(origin, -transform.right * rayLength, Color.yellow, 7f);
+            //Debug.DrawRay(origin, -transform.right * rayLength, Color.yellow, 7f);
         }
         if (right)
         {
             Vector2 origin = new Vector2(col.bounds.max.x, col.bounds.center.y);
             hits.Add(Physics2D.Raycast(origin, transform.right, rayLength, mask));
-            Debug.DrawRay(origin, transform.right * rayLength, Color.yellow, 7f);
+            //Debug.DrawRay(origin, transform.right * rayLength, Color.yellow, 7f);
 
         }
         if (top)
         {
             Vector2 origin = new Vector2(col.bounds.center.x, col.bounds.max.y);
             hits.Add(Physics2D.Raycast(origin, transform.up, rayLength, mask));
-            Debug.DrawRay(origin, transform.up * rayLength, Color.yellow, 7f);
+            //Debug.DrawRay(origin, transform.up * rayLength, Color.yellow, 7f);
 
         }
         if (bottom)
         {
             Vector2 origin = new Vector2(col.bounds.center.x, col.bounds.min.y);
             hits.Add(Physics2D.Raycast(origin, -transform.up, rayLength, mask));
-            Debug.DrawRay(origin, -transform.up * rayLength, Color.yellow, 7f);
-
+            //Debug.DrawRay(origin, -transform.up * rayLength, Color.yellow, 7f);
         }
 
         gameObject.layer = LayerMask.NameToLayer("Objects");
@@ -86,15 +84,8 @@ public class Connectable : MonoBehaviour
                 hasConnections = true;
 
                 // For each surrounding destructible block, add a fixed joint connecting to that block;
-                FixedJoint2D newJoint = gameObject.AddComponent<FixedJoint2D>();
-
-                newJoint.anchor = transform.InverseTransformPoint(hit.point);
-                newJoint.connectedBody = hit.rigidbody;
-                newJoint.enableCollision = true;
-                newJoint.dampingRatio = 1f;
-                newJoint.breakForce = breakForce;
-                newJoint.breakAction = JointBreakAction2D.Disable;
-
+                FixedJoint2D newJoint = CreateJoint(transform.InverseTransformPoint(hit.point), hit.rigidbody);
+                
                 // Add this joint to this block's list of connectedjoints.
                 conn.connectedJoints.Add(newJoint);
             }
@@ -104,9 +95,28 @@ public class Connectable : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Local anch
+    /// </summary>
+    /// <param name="anchorPosition">Local anchor position.</param>
+    /// <param name="connectedRigidBody"></param>
+    /// <returns></returns>
+    private FixedJoint2D CreateJoint(Vector2 anchorPosition, Rigidbody2D connectedRigidBody)
+    {
+        FixedJoint2D newJoint = gameObject.AddComponent<FixedJoint2D>();
+
+        newJoint.anchor = anchorPosition;
+        newJoint.connectedBody = connectedRigidBody;
+        newJoint.enableCollision = true;
+        newJoint.dampingRatio = 1f;
+        newJoint.breakForce = breakForce;
+        newJoint.breakAction = JointBreakAction2D.Disable;
+
+        return newJoint;
+    }
+
     public void BreakConnection()
     {
-        rb.mass = 3f;
         // Break connections within this gameobject.
         foreach (FixedJoint2D joint in GetComponents<FixedJoint2D>())
         {
@@ -119,17 +129,8 @@ public class Connectable : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.relativeVelocity.magnitude > 8f)
-        {
-            audioSource.Play();
-        }
-    }
-
     private void OnValidate()
     {
         rb = GetComponent<Rigidbody2D>();
-        audioSource = GetComponent<AudioSource>();
     }
 }

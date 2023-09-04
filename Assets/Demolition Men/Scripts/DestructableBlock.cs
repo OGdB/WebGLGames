@@ -8,6 +8,8 @@ public class DestructableBlock : MonoBehaviour
     [SerializeField]
     protected BlockMaterial thisMaterial = BlockMaterial.Brick;
     [SerializeField]
+    private float hitSoundVelocity = 8f;
+    [SerializeField]
     private float breakVelocity = 10f;
     [SerializeField]
     private float destroyVelocity = 15f;
@@ -21,6 +23,7 @@ public class DestructableBlock : MonoBehaviour
     private delegate void ParticleEffects();
     private ParticleEffects PlayParticleEffects;
     private Vector3 particlesPosition;
+    private AudioSource audioSource;
 
     public bool debug = false;
     private bool debugBreak = false;
@@ -29,6 +32,7 @@ public class DestructableBlock : MonoBehaviour
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
 
         switch (thisMaterial)
         {
@@ -47,15 +51,21 @@ public class DestructableBlock : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         float magnitude = collision.relativeVelocity.magnitude;
-        if (magnitude >= breakVelocity)
+
+        if (magnitude >= hitSoundVelocity)
         {
-            BreakBlock();
+            AudioEffectPlayer.PlaySoundEffect(onBreakSound, transform.position);
 
-            debugBreak = true;
-
-            if (magnitude >= destroyVelocity)
+            if (magnitude >= breakVelocity)
             {
-                gameObject.SetActive(false);
+                BreakBlock();
+
+                debugBreak = true;
+
+                if (magnitude >= destroyVelocity)
+                {
+                    gameObject.SetActive(false);
+                }
             }
         }
     }

@@ -6963,7 +6963,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 303747000808795745, guid: 8f000ab863b08734a9fd2feca5b6265a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17
+      value: -30.5
       objectReference: {fileID: 0}
     - target: {fileID: 303747000808795745, guid: 8f000ab863b08734a9fd2feca5b6265a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8523,7 +8523,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3632865796503520273, guid: 1c0c2b48fbed81c49bc8c06f509bf0ac, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -33
+      value: -41.5
       objectReference: {fileID: 0}
     - target: {fileID: 3632865796503520273, guid: 1c0c2b48fbed81c49bc8c06f509bf0ac, type: 3}
       propertyPath: m_LocalPosition.y
@@ -22513,7 +22513,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rayLength: 0.6
   rb: {fileID: 1341343296}
-  audioSource: {fileID: 1341343295}
   connectedJoints: []
   breakForce: 2000
   testBool: 0
@@ -22598,6 +22597,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisMaterial: 1
+  hitSoundVelocity: 8
   breakVelocity: 15
   destroyVelocity: 15
   blockHealth: 20
@@ -36939,7 +36939,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3632865796503520273, guid: 1c0c2b48fbed81c49bc8c06f509bf0ac, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -28.5
+      value: -37
       objectReference: {fileID: 0}
     - target: {fileID: 3632865796503520273, guid: 1c0c2b48fbed81c49bc8c06f509bf0ac, type: 3}
       propertyPath: m_LocalPosition.y
@@ -50436,7 +50436,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rayLength: 0.6
   rb: {fileID: 8334215342818306531}
-  audioSource: {fileID: 2217124045158497943}
   connectedJoints: []
   breakForce: 2000
   testBool: 0
@@ -50711,6 +50710,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisMaterial: 1
+  hitSoundVelocity: 8
   breakVelocity: 15
   destroyVelocity: 15
   blockHealth: 20

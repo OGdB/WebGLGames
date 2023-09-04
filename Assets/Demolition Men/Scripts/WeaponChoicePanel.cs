@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -19,46 +18,56 @@ public class WeaponChoicePanel : MonoBehaviour
     [SerializeField]
     private Button maceButton;
 
+    [Space(10)]
+    [SerializeField]
+    private Color normalColor;
+    [SerializeField]
+    private Color hoverColor;
+    [SerializeField]
+    private Color selectedColor;
+
     private void Start()
     {
-        EventSystem.current.SetSelectedGameObject(fistButton.gameObject);
+        foreach (var button in GetComponentsInChildren<ButtonInteraction>())
+        {
+            button.NormalColor = normalColor;
+            button.HoverColor = hoverColor;
+            button.SelectedColor = selectedColor;
+        }
     }
 
     private void OnEnable()
     {
         fistButtons.Enable();
+        fistButtons.started += _ => fistButton.onClick.Invoke();
         fistButtons.started += _ => blockDestructionScript.SetWeapon(Weapon.Fists);
-        fistButtons.started += _ => EventSystem.current.SetSelectedGameObject(fistButton.gameObject);
-        fistButton.onClick.AddListener(() => EventSystem.current.SetSelectedGameObject(fistButton.gameObject));
 
         axeButtons.Enable();
+        axeButtons.started += _ => axeButton.onClick.Invoke();
         axeButtons.started += _ => blockDestructionScript.SetWeapon(Weapon.Axe);
-        axeButtons.started += _ => EventSystem.current.SetSelectedGameObject(axeButton.gameObject);
-        axeButton.onClick.AddListener(() => EventSystem.current.SetSelectedGameObject(axeButton.gameObject));
 
         maceButtons.Enable();
+        maceButtons.started += _ => maceButton.onClick.Invoke();
         maceButtons.started += _ => blockDestructionScript.SetWeapon(Weapon.Mace);
-        maceButtons.started += _ => EventSystem.current.SetSelectedGameObject(maceButton.gameObject);
-        maceButton.onClick.AddListener(() => EventSystem.current.SetSelectedGameObject(maceButton.gameObject));
     }
 
 
     private void OnDisable()
     {
         fistButtons.Disable();
-        fistButtons.started -= _ => blockDestructionScript.SetWeapon(Weapon.Fists);
+        fistButtons.started -= _ => fistButton.onClick.Invoke();
         fistButtons.started -= _ => blockDestructionScript.SetWeapon(Weapon.Fists);
         fistButton.onClick.RemoveAllListeners();
 
 
         axeButtons.Disable();
-        axeButtons.started -= _ => blockDestructionScript.SetWeapon(Weapon.Axe);
+        axeButtons.started -= _ => axeButton.onClick.Invoke();
         axeButtons.started -= _ => blockDestructionScript.SetWeapon(Weapon.Axe);
         axeButton.onClick.RemoveAllListeners();
 
 
         maceButtons.Disable();
-        maceButtons.started -= _ => blockDestructionScript.SetWeapon(Weapon.Mace);
+        maceButtons.started -= _ => maceButton.onClick.Invoke();
         maceButtons.started -= _ => blockDestructionScript.SetWeapon(Weapon.Mace);
         maceButton.onClick.RemoveAllListeners();
     }

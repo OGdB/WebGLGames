@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
@@ -41,6 +42,7 @@ public class PauseMenu : MonoBehaviour
     public void SwitchPauseState()
     {
         StopAllCoroutines();
+        EventSystem.current.SetSelectedGameObject(null);
         // Not bothering to store in variable due to infrequent need of variable.
         CanvasGroup canvas = GetComponentInChildren<CanvasGroup>();
         StartCoroutine(SwitchPauseScreenCR(canvas, appearSpeed));

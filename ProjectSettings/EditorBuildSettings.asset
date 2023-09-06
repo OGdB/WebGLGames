@@ -9,6 +9,7 @@ EditorBuildSettings:
     path: Assets/Demolition Men/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects:
+    com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: 196622a61f306214f953fb37d730ec35, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: b2a758220afc9684cac84dbdd7bc252d, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 8323405887e762b499e626f07c23b5bb, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: 2a2090687ae73c84d99a93318a53bf3f, type: 2}

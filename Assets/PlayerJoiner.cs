@@ -24,9 +24,17 @@ public class PlayerJoiner : MonoBehaviour
     private void Start()
     {
         if (playerOnePrefab)
-            PlayerInput.Instantiate(playerOnePrefab, controlScheme: "Player One", pairWithDevice: Keyboard.current);
+        {
+            PlayerInput playerInput = PlayerInput.Instantiate(playerOnePrefab, controlScheme: "Player One", pairWithDevice: Keyboard.current);
+            Rect rect = new(0, 0, 0.49f, 1f);
+            playerInput.transform.parent.GetComponentInChildren<Camera>().rect = rect;
+        }
         if (playerTwoPrefab)
-            PlayerInput.Instantiate(playerTwoPrefab, controlScheme: "Player Two", pairWithDevice: Keyboard.current);
+        {
+            PlayerInput playerInput = PlayerInput.Instantiate(playerTwoPrefab, controlScheme: "Player Two", pairWithDevice: Keyboard.current);
+            Rect rect = new(0.51f, 0, 0.49f, 1f);
+            playerInput.transform.parent.GetComponentInChildren<Camera>().rect = rect;
+        }
     }
 
     private void SpawnPlayerOne()
@@ -52,15 +60,5 @@ public class PlayerJoiner : MonoBehaviour
         }
     }
 
-    /*    private void Update()
-        {
-            if (testBool)
-            {
-                testBool = false;
 
-                GetComponent<PlayerInputManager>().playerPrefab = playerTwoPrefab;
-
-                PlayerInput.Instantiate(playerTwoPrefab, controlScheme: "Player Two", pairWithDevice: Keyboard.current);
-            }
-        }*/
 }

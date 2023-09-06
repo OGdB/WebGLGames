@@ -55,11 +55,13 @@ public class BlockDestruction : MonoBehaviour
         }
     }
     public void SetWeapon(int newWeapon) => SetWeapon((Weapon)newWeapon);
+
     private void OnPunch(InputValue input)
     {
         string animation = input.isPressed ? currentWeapon.ToString() : "Idle";
         anim.Play(animation);
     }
+
     public void Hit()
     {
         // Audio

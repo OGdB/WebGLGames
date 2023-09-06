@@ -118,6 +118,7 @@ public class DestructableBlock : MonoBehaviour
     #region Gizmos
     protected virtual void OnValidate() => rb = GetComponent<Rigidbody2D>();
 
+#if UNITY_EDITOR
     protected virtual void OnDrawGizmos()
     {
         if (debugBreak)
@@ -142,7 +143,8 @@ public class DestructableBlock : MonoBehaviour
             Handles.Label(position, text, style);
         }
     }
-    #endregion
+#endif
+#endregion
 }
 
 public enum BlockMaterial

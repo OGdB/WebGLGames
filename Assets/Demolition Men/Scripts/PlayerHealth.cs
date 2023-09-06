@@ -30,6 +30,7 @@ public class PlayerHealth : Health
         }
     }
 
+    #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         DrawLabel(healthSlider.transform.position, CurrentHealth.ToString());
@@ -42,4 +43,5 @@ public class PlayerHealth : Health
             Handles.Label(position, text, style);
         }
     }
+#endif
 }

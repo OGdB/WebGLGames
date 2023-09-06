@@ -71,12 +71,12 @@ public class DestructionManager : MonoBehaviour
         upperSegment.GetComponent<SpriteRenderer>().size = new(origSize.x, upperHeight);
         lowerSegment.GetComponent<SpriteRenderer>().size = new(origSize.x, lowerHeight);
 
-        // TODO ~ 
-        // Connections shouldn't be made in directions the original block had no connections in.
-
+        Connectable originalConnectable = origTransform.GetComponent<Connectable>();
         // 5. Set connections of the sub-segments.
-        upperSegment.GetComponent<Connectable>().FindConnections(true, true, true, false);
-        lowerSegment.GetComponent<Connectable>().FindConnections(true, true, false, true);
+        if (originalConnectable.Connections.ContainsKey(Direction.Up))
+            upperSegment.GetComponent<Connectable>().FindConnections(true, true, true, false);
+        if (originalConnectable.Connections.ContainsKey(Direction.Down))
+            lowerSegment.GetComponent<Connectable>().FindConnections(true, true, false, true);
 
         // 6. Disable original segment.
         origTransform.gameObject.SetActive(false);

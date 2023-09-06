@@ -87,6 +87,13 @@ public class CharacterControl : MonoBehaviour
         PauseMenu.OnPause -= PauseMenu_OnPause;
     }
 
+    private void Start()
+    {
+        PlayerInput playerInput = GetComponent<PlayerInput>();
+        playerInput.enabled = false;
+        playerInput.enabled = true;
+    }
+
     /// <summary>
     /// Activate / De-activate input on pause.
     /// </summary>
@@ -109,13 +116,14 @@ public class CharacterControl : MonoBehaviour
     /// <param name="input"></param>
     private void OnMove(InputValue input)
     {
-        xInput = input.Get<float>();
+        xInput = input.Get<Vector2>().x;
 
         if (xInput == 0) return;
 
         float yRot = xInput > 0 ? 0 : -180f;  // Rotate the character 180 if moving to opposite direction than before.
         transform.rotation = Quaternion.Euler(0, yRot, 0);
     }
+
     // TODO - Double Jump (?)
     /// <summary>
     /// Called by PlayerInput once on jump.
@@ -140,6 +148,7 @@ public class CharacterControl : MonoBehaviour
             }
         }
     }
+
     private void OnPunch(InputValue input)
     {
         currentXSpeed = input.isPressed ? attackMoveSpeed : runspeed;
@@ -199,6 +208,8 @@ public class CharacterControl : MonoBehaviour
         Vector2 groundCheckBoxSize = new(0.2f, 0.15f);
         groundChecker = new(groundLayers, groundCheckBoxSize, collider);
     }
+#if UNITY_EDITOR
+
     private void OnDrawGizmos()
     {
         if (debug)
@@ -215,4 +226,5 @@ public class CharacterControl : MonoBehaviour
             }
         }
     }
+#endif
 }

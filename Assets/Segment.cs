@@ -5,11 +5,6 @@ public class Segment : DestructableBlock
     [SerializeField]
     private float breakHealth = 50;
 
-    protected override void Start()
-    {
-        base.Start();
-    }
-
     /// <summary>
     /// Handles with consequences of being hit.
     /// </summary>
@@ -34,30 +29,5 @@ public class Segment : DestructableBlock
             lowerSegment.GetComponent<Rigidbody2D>().AddForceAtPosition(direction * weapon.PushForce, hitPoint, ForceMode2D.Impulse);
             lowerSegment.GetComponent<DestructableBlock>().SetHealth(blockHealth);
         }
-    }
-
-    protected override void OnValidate()
-    {
-        base.OnValidate();
-    }
-
-    protected override void OnDrawGizmos()
-    {
-        if (!Application.isPlaying) return;
-
-        Gizmos.color = Color.yellow;
-
-/*        Gizmos.color = Color.white;
-        Vector2 punchCenter = new(spr.bounds.center.x, lastPunchPosition.y);
-        Gizmos.DrawSphere(punchCenter, 0.1f);
-
-        Gizmos.color = Color.yellow;
-        Vector2 punchUp = punchCenter;
-        punchUp += (Vector2)transform.up * minimumSegmentSize;
-        Gizmos.DrawSphere(punchUp, 0.15f);
-
-        Vector2 punchDown = punchCenter;
-        punchDown -= (Vector2)transform.up * minimumSegmentSize;
-        Gizmos.DrawSphere(punchDown, 0.15f);*/
     }
 }

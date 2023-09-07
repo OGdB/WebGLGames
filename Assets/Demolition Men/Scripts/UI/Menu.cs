@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Standard pause screen script that should have most functionalities you need for pause screens.
 /// </summary>
-public class PauseMenu : MonoBehaviour
+public class Menu : MonoBehaviour
 {
     #region Properties
     [SerializeField, Space(10)]
@@ -53,15 +53,6 @@ public class PauseMenu : MonoBehaviour
         isPaused = false;
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex);
-    }
-
-    public static void QuitGame()
-    {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-    Application.Quit();
-#endif
     }
 
     private IEnumerator SwitchPauseScreenCR(CanvasGroup canvas, float speed)

@@ -140,11 +140,33 @@
                 },
                 {
                     "name": "",
+                    "id": "f8c105c6-db38-4f85-8909-779003954768",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Player Two;Player One",
+                    "action": "Point",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "79320588-d7b8-4474-919a-ead517fd5e60",
                     "path": "<Touchscreen>/touch*/press",
                     "interactions": "",
                     "processors": "",
                     "groups": "Player One;Player Two",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d5f0a2bd-91b0-48a3-953f-ff32acb2f725",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Player Two;Player One",
                     "action": "Click",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -303,6 +325,11 @@
                     "devicePath": "<Touchscreen>",
                     "isOptional": true,
                     "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": true,
+                    "isOR": false
                 }
             ]
         },
@@ -322,6 +349,11 @@
                 },
                 {
                     "devicePath": "<Touchscreen>",
+                    "isOptional": true,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
                     "isOptional": true,
                     "isOR": false
                 }

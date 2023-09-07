@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.iOS;
 
 /// <summary>
 /// Class responsible for controlling this character (and its associated animations).
@@ -81,17 +80,16 @@ public class CharacterControl : MonoBehaviour
 
     private void OnEnable()
     {
-        PauseMenu.OnPause += PauseMenu_OnPause;
+        Menu.OnPause += PauseMenu_OnPause;
     }
     private void OnDisable()
     {
-        PauseMenu.OnPause -= PauseMenu_OnPause;
+        Menu.OnPause -= PauseMenu_OnPause;
     }
 
     private void Start()
     {
         if (!UnityEngine.Device.Application.isMobilePlatform) return;
-        print("Mobile");
         PlayerInput playerInput = GetComponent<PlayerInput>();
         playerInput.enabled = false;
         playerInput.enabled = true;

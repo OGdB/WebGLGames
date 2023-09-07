@@ -6,8 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Demolition Men/Scenes/SampleScene.unity
+    path: Assets/Demolition Men/Scenes/Game.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Demolition Men/Scenes/Menu.unity
+    guid: 7cb6381ef7186c14c80ca4ae16b948e6
   m_configObjects:
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: 196622a61f306214f953fb37d730ec35, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: b2a758220afc9684cac84dbdd7bc252d, type: 2}

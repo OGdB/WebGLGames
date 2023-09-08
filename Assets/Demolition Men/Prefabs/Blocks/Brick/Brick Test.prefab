@@ -50,12 +50,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisMaterial: 1
   hitSoundVelocity: 8
-  breakVelocity: 13
-  destroyVelocity: 16
+  breakVelocity: 15
+  destroyVelocity: 20
   blockHealth: 100
   onBreakSound: {fileID: 8300000, guid: 447af4cac78dc5843bdbe214706a5939, type: 3}
   debug: 0
   breakHealth: 10
+  segmentationVelocity: 11
 --- !u!114 &45934854132899656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,7 +71,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rayLength: 0.1
   rb: {fileID: 9168103450271058295}
-  connectedJoints: []
   breakForce: 700
   testBool: 0
   connect: 0

@@ -14,6 +14,12 @@ public class DestructionManager : MonoBehaviour
     {
         if (Singleton != null) return;
         Singleton = this;
+
+        // Although blocks starting in the scene should auto-connect, they shouldn't when they segment.
+        foreach (var block in blocks)
+        {
+            block.associatedPrefab.GetComponent<Connectable>().connect = false;
+        }
     }
 
     /// <summary>
@@ -25,7 +31,7 @@ public class DestructionManager : MonoBehaviour
     /// <param name="lowerSegment">The lower segment to return.</param>
     /// <param name="upperSegment">The upper segment to return.</param>
     /// <returns>Returns whether a split on this block was possible.</returns>
-    public static bool SplitSprite(Transform origTransform, Vector2 hitPoint, BlockMaterial material, ref GameObject lowerSegment, ref GameObject upperSegment)
+    public static bool SplitSprite(Transform origTransform, Vector2 hitPoint, BlockMaterial material, out GameObject lowerSegment, out GameObject upperSegment)
     {
         // RETRIEVALS
         GameObject blockPrefab = GetPrefab(material);
@@ -52,6 +58,8 @@ public class DestructionManager : MonoBehaviour
         if (!bigEnough)
         {
             Debug.Log("One of the sub-segments wasn't big enough");
+            lowerSegment = null;
+            upperSegment = null;
             return false;
         }
 
@@ -62,24 +70,35 @@ public class DestructionManager : MonoBehaviour
         // ASSIGNMENTS
         // 4. Instantiate and set the calculated variables.
         // Prefab, position, rotation, name
+        origTransform.gameObject.SetActive(false);
+
         upperSegment = Instantiate(blockPrefab, upperPos, origRotation);
         lowerSegment = Instantiate(blockPrefab, lowerPos, origRotation);
         upperSegment.name = "Upper Segment";
         lowerSegment.name = "Lower Segment";
 
         // Size
+        upperSegment.transform.localScale = origTransform.localScale;
+        lowerSegment.transform.localScale = origTransform.localScale;
         upperSegment.GetComponent<SpriteRenderer>().size = new(origSize.x, upperHeight);
         lowerSegment.GetComponent<SpriteRenderer>().size = new(origSize.x, lowerHeight);
 
         Connectable originalConnectable = origTransform.GetComponent<Connectable>();
         // 5. Set connections of the sub-segments.
         if (originalConnectable.Connections.ContainsKey(Direction.Up))
-            upperSegment.GetComponent<Connectable>().FindConnections(true, true, true, false);
+            upperSegment.GetComponent<Connectable>().FindConnections(
+                left: true,
+                right: true,
+                top: true,
+                bottom: false);
         if (originalConnectable.Connections.ContainsKey(Direction.Down))
-            lowerSegment.GetComponent<Connectable>().FindConnections(true, true, false, true);
+            lowerSegment.GetComponent<Connectable>().FindConnections(
+                left: true,
+                right: true,
+                top: false,
+                bottom: true);
 
         // 6. Disable original segment.
-        origTransform.gameObject.SetActive(false);
 
         return true;
     }

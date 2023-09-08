@@ -1,7 +1,6 @@
 using UnityEditor;
 using UnityEngine;
 
-// TODO: Possible optimization with Dictionary
 public class DestructableBlock : MonoBehaviour
 {
     #region Properties
@@ -47,7 +46,7 @@ public class DestructableBlock : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         float magnitude = collision.relativeVelocity.magnitude;
 

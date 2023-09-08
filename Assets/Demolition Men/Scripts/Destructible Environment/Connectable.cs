@@ -36,7 +36,7 @@ public class Connectable : MonoBehaviour
 
     public bool FindConnections(bool left, bool right, bool top, bool bottom)
     {
-        List<RaycastHit2D> hits = new List<RaycastHit2D>();
+        List<RaycastHit2D> hits = new();
         Collider2D col = GetComponent<Collider2D>();
         int mask = 1 << LayerMask.NameToLayer("Objects");
         gameObject.layer = LayerMask.NameToLayer("Default");

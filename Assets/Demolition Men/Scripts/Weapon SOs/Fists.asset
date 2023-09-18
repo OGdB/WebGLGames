@@ -14,9 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: 1
   pushForce: 5
-  woodDamage: 1
-  onWoodSound: {fileID: 8300000, guid: 80ac97be429a5be488193a8cd97e8a18, type: 3}
-  brickDamage: 10
-  onBrickSound: {fileID: 8300000, guid: 80ac97be429a5be488193a8cd97e8a18, type: 3}
-  metalDamage: 10
-  onMetalSound: {fileID: 8300000, guid: 0a23e30d3a76a5e4388878e8bf56c0e5, type: 3}
+  weaponStats:
+  - material: 2
+    damageToMaterial: 10
+    onMaterialHitSound: {fileID: 8300000, guid: 256d8d99603572c49831efaee2f7e7f2, type: 3}
+  - material: 1
+    damageToMaterial: 10
+    onMaterialHitSound: {fileID: 8300000, guid: bee0aa2e8d1bbd946b1d4f83d3ea0339, type: 3}
+  - material: 3
+    damageToMaterial: 10
+    onMaterialHitSound: {fileID: 8300000, guid: 8038a00bb3ac1a14ca23f236ec9f0c30, type: 3}

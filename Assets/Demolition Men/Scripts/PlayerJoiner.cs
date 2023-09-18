@@ -1,8 +1,12 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerJoiner : MonoBehaviour
 {
+    [SerializeField]
+    private Vector3 spawnPosition;
+
     [SerializeField]
     private GameObject playerOnePrefab;
     [SerializeField]
@@ -28,12 +32,14 @@ public class PlayerJoiner : MonoBehaviour
             PlayerInput playerInput = PlayerInput.Instantiate(playerOnePrefab, controlScheme: "Player One", pairWithDevice: Keyboard.current);
             Rect rect = new(0, 0, 0.49f, 1f);
             playerInput.transform.parent.GetComponentInChildren<Camera>().rect = rect;
+            playerInput.transform.position = spawnPosition; 
         }
         if (playerTwoPrefab)
         {
             PlayerInput playerInput = PlayerInput.Instantiate(playerTwoPrefab, controlScheme: "Player Two", pairWithDevice: Keyboard.current);
             Rect rect = new(0.51f, 0, 0.49f, 1f);
             playerInput.transform.parent.GetComponentInChildren<Camera>().rect = rect;
+            playerInput.transform.position = spawnPosition;
         }
     }
 
@@ -60,5 +66,19 @@ public class PlayerJoiner : MonoBehaviour
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(spawnPosition, 0.2f);
 
+        DrawLabel(spawnPosition, "Player Spawn Position");
+
+        void DrawLabel(Vector3 position, string text)
+        {
+            GUIStyle style = new();
+            style.fontSize = 24;
+            style.normal.textColor = Color.white;
+            Handles.Label(position, text, style);
+        }
+    }
 }

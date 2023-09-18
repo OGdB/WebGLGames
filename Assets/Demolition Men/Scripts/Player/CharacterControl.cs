@@ -150,6 +150,10 @@ public class CharacterControl : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Called through the input manager when Punch is pressed.
+    /// </summary>
+    /// <param name="input"></param>
     private void OnPunch(InputValue input)
     {
         currentXSpeed = input.isPressed ? attackMoveSpeed : runspeed;

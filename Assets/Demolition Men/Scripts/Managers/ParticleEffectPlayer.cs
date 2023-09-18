@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Responsible for playing various particles at provided positions.
+/// </summary>
 public class ParticleEffectPlayer : MonoBehaviour
 {
     private static ParticleSystem[] brickParticleSystems;

@@ -2,6 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// To attach to a button to make it start the transition to a scene.
+/// </summary>
 public class SceneButton : MonoBehaviour
 {
     [SerializeField]

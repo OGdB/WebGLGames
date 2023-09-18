@@ -1,8 +1,9 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using UnityEngine.UIElements;
 
+/// <summary>
+/// Responsible for darkening the screen at the scene's start and start of a scene transition.
+/// </summary>
 [RequireComponent(typeof(CanvasGroup))]
 public class FadeCanvas : MonoBehaviour
 {
